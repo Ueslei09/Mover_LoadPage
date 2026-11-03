@@ -1,0 +1,51 @@
+/* src/assets/main.css */
+
+/* 1. RESET GLOBAL ESSENCIAL */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. VARIÁVEIS OFICIAIS DE CORES DO PROJETO */
+:root {
+  --mover-primary-blue: #0b2545;   
+  --mover-accent-green: #61b329;   
+  --mover-light-green: #8bc34a;    
+  --mover-silver-gray: #a6b9c7;    
+  --mover-dark-bg: #050b14;        
+  --mover-light-bg: #f8f9fa; 
+  --mpro-bg-custom: #e8e9eb;       /* Tom de fundo específico solicitado */
+}
+
+/* 3. ESTILOS BASE DO BODY E HTML */
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--mpro-bg-custom); /* Aplica o #e8e9eb como fundo global padrão */
+  color: var(--mover-primary-blue);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* 4. ELEMENTOS GLOBAIS */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
