@@ -4,7 +4,7 @@ export const moverBlogService = {
     return {
       tag: 'BLOG',
       titlePrefix: 'Mover',
-      titleHighlight: 'Sistemas',
+      titleHighlight: '  Sistemas',
       posts: [
         {
           id: 1,

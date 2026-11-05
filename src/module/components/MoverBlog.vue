@@ -24,6 +24,8 @@
           </h2>
         </div>
 
+        <hr class="section-divider mx-auto my-4" />
+
         <!-- Grade de Cards (4 cards, col-12 col-lg-6 cada) -->
         <div class="container-fluid px-0 px-md-4 z-2 position-relative">
           <div class="row g-4 justify-content-center">
@@ -146,9 +148,20 @@ const { isVisible, elementRef } = useParallax(0.05)
 }
 
 .blog-title-highlight {
-  color: #8bc34a !important;
+  color: #ffffff !important;
 }
 
+
+.section-divider {
+  width: 60%; /* Ou width: 100% se quiser que ocupe de ponta a ponta */
+  height: 2px !important;
+  background-color: #8bc34a !important;
+  border: none !important;
+  opacity: 1 !important;
+  margin: 1.5rem auto !important;
+  margin-bottom: 3rem !important;
+ 
+}
 /* Estilização do Card */
 .blog-card {
   border: none;

@@ -26,6 +26,8 @@
             <span class="d-block text-highlight">{{ curiosidadesData?.titleHighlight }}</span>
           </h2>
 
+          <hr class="section-divider mx-auto my-4" />
+
           <!-- Container da Mídia (Vídeo Nativo ou Imagem) -->
           <div class="row justify-content-center">
             <div class="col-12 col-lg-10">
@@ -139,6 +141,17 @@ const { isVisible, elementRef } = useParallax(0.05);
 
 .text-highlight {
   color: #8bc34a !important;
+}
+
+.section-divider {
+  width: 60%; /* Ou width: 100% se quiser que ocupe de ponta a ponta */
+  height: 2px !important;
+  background-color: #0b2545 !important;
+  border: none !important;
+  opacity: 1 !important;
+  margin: 1.5rem auto !important;
+  margin-bottom: 3rem !important;
+ 
 }
 
 .media-container-card {
