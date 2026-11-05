@@ -44,12 +44,21 @@
                   <div class="d-flex flex-column flex-sm-row gap-3">
                     <a 
                       :href="bannerData.primaryButton.url" 
+                      @click.prevent="openModal"
                       class="btn btn-mover-primary fw-semibold px-4 py-3 rounded-2 text-white text-uppercase shadow-sm flex-fill text-center"
                       :aria-label="bannerData.primaryButton.ariaLabel"
                     >
                       {{ bannerData.primaryButton.text }}
                     </a>
-
+                      
+                    <MoverDemoModal 
+  :isOpen="isModalOpen" 
+  :data="demoData" 
+  :form="formState" 
+  :close="closeModal" 
+  :onSubmit="handleSubmit" 
+/>
+                         
                     <a 
                       :href="bannerData.secondaryButton.url" 
                       class="btn btn-mover-outline fw-semibold px-4 py-3 rounded-2 text-white text-uppercase flex-fill text-center"
@@ -135,8 +144,15 @@
 import { useMoverBanner } from '../composables/useMoverBanner'
 import { useParallax } from '@/shared/composables/useParallax'
 
+// Importa o composable e o componente diretamente da pasta shared
+import { useMoverDemoModal } from '@/shared/composables/useMoverDemoModal'
+import MoverDemoModal from '@/shared/components/MoverDemoModal.vue'
+
 const { bannerData } = useMoverBanner()
 const { isVisible, elementRef } = useParallax(0.05)
+
+// Controla o modal diretamente aqui no banner usando o composable que está na shared
+const { isModalOpen, demoData, formState, openModal, closeModal, handleSubmit } = useMoverDemoModal()
 </script>
 
 <style scoped>
@@ -157,7 +173,7 @@ const { isVisible, elementRef } = useParallax(0.05)
   background-color: #0b2545;
   border-radius: 28px !important;
   overflow: hidden !important;
-box-shadow: 35px 0px 10px rgba(0, 0, 0, 0.1) !important;
+box-shadow: 20px 10px 10px rgba(0, 0, 0, 0.1) !important;
 }
 
 .banner-top-section {

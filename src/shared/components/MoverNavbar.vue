@@ -6,7 +6,7 @@
       <div class="container d-flex align-items-center justify-content-between">
         
         <!-- LOGO À ESQUERDA (Suporte a imagem ou texto via service) -->
-        <a class="navbar-brand d-flex align-items-center m-0" href="#" aria-label="Página inicial Mover">
+        <router-link to="/" class="navbar-brand d-flex align-items-center m-0 text-decoration-none" aria-label="Página inicial Mover">
           <template v-if="navbarData.logoType === 'image'">
             <img 
               :src="navbarData.logoSrc" 
@@ -17,7 +17,7 @@
           <template v-else>
             <span class="brand-logo-text fw-bold fs-4">{{ navbarData.logoText }}</span>
           </template>
-        </a>
+        </router-link>
 
         <!-- BOTÃO HAMBÚRGUER PARA RESPONSIVIDADE MOBILE -->
         <button 

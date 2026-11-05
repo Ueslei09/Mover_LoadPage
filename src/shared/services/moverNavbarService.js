@@ -7,6 +7,7 @@ export const moverNavbarService = {
       logoSrc: "/moovelogo1_imagem.png", // Caminho da logo ou use URL/ícone
       logoText: "Mover", // Caso queira usar texto como logo
       logoAlt: "Mover Sistemas Logo",
+      
 
       // Link de navegação à direita
       navLink: {

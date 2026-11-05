@@ -121,6 +121,7 @@ const { isVisible, elementRef } = useParallax(0.05)
 <style scoped>
 .mover-solutions-section {
   background-color: transparent !important;
+  top: -50px !important;
   width: 100%;
 }
 
@@ -168,7 +169,7 @@ const { isVisible, elementRef } = useParallax(0.05)
 
 .solutions-card-wrapper {
   border-radius: 28px !important;
-  box-shadow: 35px 0px 50px rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 35px 10px 50px rgba(0, 0, 0, 0.1) !important;
   border: 1px solid rgba(11, 37, 69, 0.06);
 }
 
