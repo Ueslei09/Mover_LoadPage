@@ -8,7 +8,7 @@ export const moverBlogService = {
       posts: [
         {
           id: 1,
-          route: '/blog/automatizar-tarefas-financeiras',
+          route: '/blog/transformacao-digital',
           date: '29 Out 2026',
           title: 'Como automatizar tarefas financeiras no ERP',
           description: 'Automatizar tarefas financeiras reduz erros, acelera decisões e integra controles. Veja como estruturar esse avanço com um ERP empresarial.',

@@ -64,9 +64,13 @@
 
                   <!-- Overlay com Gradiente e Botão -->
                   <div class="media-gradient-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-end p-3">
-                    <span class="blog-action-btn fw-semibold px-4 py-2 rounded-pill text-white shadow-sm">
+                    <router-link 
+                      :to="post.route" 
+                      class="blog-action-btn fw-semibold px-4 py-2 rounded-pill text-white shadow-sm text-decoration-none d-inline-block"
+                      @click.stop
+                  >
                       {{ post.buttonText }} <i class="bi bi-arrow-right ms-1"></i>
-                    </span>
+                  </router-link>
                   </div>
                 </div>
 

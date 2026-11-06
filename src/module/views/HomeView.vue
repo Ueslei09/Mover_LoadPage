@@ -14,6 +14,10 @@
      <div id="blog">
      <MoverBlog />
       </div>
+      <MoverBanner2 />
+      <MoverProvaSocial />
+      <MoverFAQ />
+      <MoverCopyright />
   </div>
 </template>
 
@@ -23,5 +27,9 @@ import MoverSolutions from '../components/MoverSolutions.vue'
 import MoverAbout from '../components/MoverAbout.vue'
 import MoverCuriosidades from '../components/MoverCuriosidades.vue'
 import MoverBlog from '../components/MoverBlog.vue'
+import MoverBanner2 from '../components/MoverBanner2.vue'
+import MoverProvaSocial from '../components/MoverProvaSocial.vue'
+import MoverFAQ from '../components/MoverFAQ.vue'
+import MoverCopyright from '../components/MoverCopyright.vue'
 
 </script>

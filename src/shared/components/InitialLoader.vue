@@ -5,10 +5,10 @@
       <div class="card-loader-container">
         <div class="card-box">
           <div class="loader">
-            <p>carregando</p>
+            <p>carregando </p>
             <div class="words">
-              <span class="word">sistemas</span>
-              <span class="word">reformas</span>
+              <span class="word">Mover</span>
+              <span class="word">Sistemas</span>
               <span class="word">soluções</span>
               <span class="word">mover</span>
               <span class="word">sistemas</span>
@@ -33,7 +33,7 @@ defineProps({
   left: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  background-color: #0b2545 !important;
+  background-color: #e8e9eb !important;
   z-index: 999999 !important;
   display: flex;
   align-items: center;
@@ -41,7 +41,7 @@ defineProps({
 }
 
 .card-box {
-  --bg-color: #0b2545;
+  --bg-color: #e8e9eb;
   background-color: var(--bg-color);
   padding: 1.5rem 2.5rem;
   border-radius: 1.25rem;
@@ -101,7 +101,7 @@ defineProps({
 }
 
 .fade-loader-leave-active {
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.6s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fade-loader-leave-to {

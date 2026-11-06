@@ -3,13 +3,13 @@ export const moverSolutionsService = {
   getData() {
     return {
       titlePrefix: 'Tudo o que move a gestão empresarial,',
-      titleHighlight: 'conectado.',
+      titleHighlight: ' conectado.',
       subtitle: 'Explore as soluções e encontre a combinação certa para o seu negócio.',
       featuresTitle: 'Soluções',
       tabs: [
         {
           id: 1,
-          title: 'ERP – Backoffice',
+          title: 'Financeiro',
           icon: 'bi bi-briefcase',
           description: 'Centralize finanças, vendas, suprimentos e fiscal para ganhar visibilidade, padronizar processos e decidir com dados confiáveis.',
           features: ['Mercado e vendas', 'Suprimentos', 'Finanças', 'Fiscal'],
@@ -18,7 +18,7 @@ export const moverSolutionsService = {
         },
         {
           id: 2,
-          title: 'Manufatura',
+          title: 'Contábil',
           icon: 'bi bi-gear-wide-connected',
           description: 'Controle o chão de fábrica, ordens de produção, custos e rastreabilidade de ponta a ponta com alta eficiência operacional.',
           features: ['Controle de Produção', 'Ordens de Serviço', 'Gestão de Insumos', 'Custos Industriais'],
@@ -27,7 +27,7 @@ export const moverSolutionsService = {
         },
         {
           id: 3,
-          title: 'Supply Chain',
+          title: 'Estoque',
           icon: 'bi bi-truck',
           description: 'Otimize armazéns, rotas de entrega, estoque e cadeia de suprimentos para entregas ágeis e sem gargalos.',
           features: ['Gestão de Armazém', 'Roteirização', 'Controle de Estoque', 'Expedição'],
