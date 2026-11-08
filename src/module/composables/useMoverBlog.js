@@ -1,11 +1,21 @@
 // src/modules/mover/composables/useMoverBlog.js
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { moverBlogService } from '../services/moverBlogService'
 
 export function useMoverBlog() {
   const router = useRouter()
-  const blogData = ref(moverBlogService.getData())
+  const blogData = ref({
+    tag: 'BLOG',
+    titlePrefix: 'Mover',
+    titleHighlight: ' Sistemas',
+    posts: []
+  })
+
+  // Carrega os posts da base de dados ao abrir a página
+  onMounted(async () => {
+    blogData.value = await moverBlogService.getData()
+  })
 
   // Função para redirecionar para a rota específica de cada card
   const navigateToPost = (route) => {
