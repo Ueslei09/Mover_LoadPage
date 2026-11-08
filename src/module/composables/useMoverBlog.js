@@ -1,31 +1,36 @@
 // src/modules/mover/composables/useMoverBlog.js
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { moverBlogService } from '../services/moverBlogService'
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { moverBlogService } from '../services/moverBlogService';
 
 export function useMoverBlog() {
-  const router = useRouter()
+  const router = useRouter();
+  
+  // Mantemos a estrutura de dados que o seu componente MoverBlog.vue desenha
   const blogData = ref({
     tag: 'BLOG',
     titlePrefix: 'Mover',
-    titleHighlight: ' Sistemas',
+    titleHighlight: 'Sistemas',
     posts: []
-  })
+  });
 
-  // Carrega os posts da base de dados ao abrir a página
+  const isLoading = ref(true);
+
   onMounted(async () => {
-    blogData.value = await moverBlogService.getData()
-  })
+    isLoading.value = true;
+    const data = await moverBlogService.fetchPosts();
+    // Atribui os posts obtidos à propriedade correta
+    blogData.value.posts = Array.isArray(data) ? data : [];
+    isLoading.value = false;
+  });
 
-  // Função para redirecionar para a rota específica de cada card
   const navigateToPost = (route) => {
-    if (route) {
-      router.push(route)
-    }
-  }
+    if (route) router.push(route);
+  };
 
   return {
-    blogData,
+    blogData,   // <-- O componente MoverBlog.vue usa isto para o título e tags
+    isLoading,
     navigateToPost
-  }
+  };
 }

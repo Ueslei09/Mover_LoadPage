@@ -16,20 +16,28 @@
         <!-- Cabeçalho da Seção -->
         <div class="text-center mb-5 z-2 position-relative">
           <span class="blog-tag text-uppercase fw-bold mb-2 d-inline-block">
-            {{ blogData?.tag }}
+            {{ blogData?.tag || 'BLOG' }}
           </span>
           <h2 class="blog-main-title fw-bold text-white">
-            <span>{{ blogData?.titlePrefix }}</span> 
-            <span class="blog-title-highlight">{{ blogData?.titleHighlight }}</span>
+            <span>{{ blogData?.titlePrefix || 'Mover' }}</span> 
+            <span class="blog-title-highlight">{{ blogData?.titleHighlight || ' Sistemas' }}</span>
           </h2>
         </div>
 
         <hr class="section-divider mx-auto my-4" />
 
-        <!-- Grade de Cards (4 cards, col-12 col-lg-6 cada) -->
+        <!-- CONTEÚDO DA SEÇÃO -->
         <div class="container-fluid px-0 px-md-4 z-2 position-relative">
-          <div class="row g-4 justify-content-center">
-            
+          
+          <!-- SKELETON LOADERS (Enquanto isLoading for true) -->
+          <div v-if="isLoading" class="row g-4 justify-content-center">
+            <div v-for="n in 2" :key="n" class="col-12 col-lg-6 d-flex">
+              <SkeletonLoader />
+            </div>
+          </div>
+
+          <!-- GRADE DE CARDS REAIS (Quando os dados estiverem prontos) -->
+          <div v-else class="row g-4 justify-content-center">
             <div 
               v-for="post in blogData?.posts" 
               :key="post.id"
@@ -68,9 +76,9 @@
                       :to="post.route" 
                       class="blog-action-btn fw-semibold px-4 py-2 rounded-pill text-white shadow-sm text-decoration-none d-inline-block"
                       @click.stop
-                  >
+                    >
                       {{ post.buttonText }} <i class="bi bi-arrow-right ms-1"></i>
-                  </router-link>
+                    </router-link>
                   </div>
                 </div>
 
@@ -83,7 +91,7 @@
                     <h3 class="blog-post-title fw-bold mb-2">
                       {{ post.title }}
                     </h3>
-                    <p class="blog-post-desc mb-0 lh-base">
+                    <p class="blog-post-desc mb-0 lh-base text-muted">
                       {{ post.description }}
                     </p>
                   </div>
@@ -91,8 +99,8 @@
 
               </div>
             </div>
-
           </div>
+
         </div>
 
       </div>
@@ -104,8 +112,9 @@
 <script setup>
 import { useMoverBlog } from '../composables/useMoverBlog'
 import { useParallax } from '@/shared/composables/useParallax'
+import SkeletonLoader from '@/shared/components/SkeletonLoader.vue'
 
-const { blogData, navigateToPost } = useMoverBlog()
+const { blogData, isLoading, navigateToPost } = useMoverBlog()
 const { isVisible, elementRef } = useParallax(0.05)
 </script>
 
@@ -129,7 +138,7 @@ const { isVisible, elementRef } = useParallax(0.05)
   overflow: hidden !important;
   box-shadow: 20px 10px 10px rgba(0, 0, 0, 0.28) !important;
   opacity: 0;
-  top:-10px;
+  top: -10px;
   transform: translateY(35px);
   transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -155,17 +164,16 @@ const { isVisible, elementRef } = useParallax(0.05)
   color: #ffffff !important;
 }
 
-
 .section-divider {
-  width: 60%; /* Ou width: 100% se quiser que ocupe de ponta a ponta */
+  width: 60%;
   height: 2px !important;
   background-color: #8bc34a !important;
   border: none !important;
   opacity: 1 !important;
   margin: 1.5rem auto !important;
   margin-bottom: 3rem !important;
- 
 }
+
 /* Estilização do Card */
 .blog-card {
   border: none;
@@ -224,6 +232,11 @@ const { isVisible, elementRef } = useParallax(0.05)
   color: #0b2545 !important;
   font-size: 0.95rem;
   opacity: 0.85;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Responsividade Mobile */

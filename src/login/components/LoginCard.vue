@@ -8,7 +8,7 @@
 
       <!-- Título -->
       <div class="login-header">
-        <h1 class="login-title">Sign In</h1>
+        <h1 class="login-title">Entrar</h1>
       </div>
 
       <!-- Formulário -->
@@ -32,25 +32,27 @@
         </div>
 
         <div class="forgot-container">
-          <a href="#" class="forgot-link">Forgot Password ?</a>
-        </div>
+  <router-link to="/recuperar-senha" class="forgot-link text-decoration-none small text-custom-blue">
+    Esqueceu a senha?
+  </router-link>
+</div>
 
         <div v-if="errorMessage" class="error-message">
           {{ errorMessage }}
         </div>
 
         <button type="submit" class="btn-signin" :disabled="loading">
-          {{ loading ? 'Signing in...' : 'Sign In' }}
+          {{ loading ? 'Entrando...' : 'Entrar' }}
         </button>
       </form>
 
       <!-- Divisor Social -->
       <div class="social-section">
-        <p class="social-text">Or Sign in with</p>
+        <p class="social-text">Siga Nossas Redes Sociais</p>
         <div class="social-icons">
           <a href="#" class="social-icon-btn" title="Google"><i class="bi bi-google"></i></a>
           <a href="#" class="social-icon-btn" title="Apple"><i class="bi bi-apple"></i></a>
-          <a href="#" class="social-icon-btn" title="Twitter / X"><i class="bi bi-x"></i></a>
+          <a href="https://www.instagram.com/moversistemas?cplk=dWdoNmptZjZvN2Z4" class="social-icon-btn" title="Instagram"><i class="bi bi-instagram"></i></a>
         </div>
       </div>
 

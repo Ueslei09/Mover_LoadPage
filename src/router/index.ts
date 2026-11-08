@@ -3,11 +3,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MoverView from '../module/views/HomeView.vue'
 import MoverPaginaBlog1 from '../module/views/MoverPaginaBlog1.vue'
 import LoginView from '../login/views/LoginView.vue'
+import PasswordRecoveryView from '../login/components/PasswordRecoveryView.vue'
 
 // Importar o Layout e os componentes administrativos
 import AdminLayout from '../login/components/AdminLayout.vue'
 import LeadsDashboard from '../login/components/LeadsDashboard.vue'
 import BlogDashboard from '../login/components/BlogDashboard.vue'
+import AdminUsersView from '../login/components/AdminUsersView.vue'
+import AdminInstragamView from '../login/components/InstagramPostView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +31,11 @@ const router = createRouter({
       component: LoginView
     },
     {
+      path: '/recuperar-senha', // <-- Rota pública de recuperação de senha por OTP
+      name: 'RecuperarSenha',
+      component: PasswordRecoveryView
+    },
+    {
       path: '/admin',
       component: AdminLayout,
       meta: { requiresAuth: true }, // Protegido por JWT
@@ -43,16 +51,40 @@ const router = createRouter({
           component: BlogDashboard // <-- Rota do Blog registada com sucesso!
         },
         {
+          path: 'usuarios', // <--- NOVA ROTA REGISTRADA NO PAINEL ADMIN
+          name: 'AdminUsers',
+          component: AdminUsersView
+        },
+        {
+  path: 'instagram',
+  name: 'AdminInstagram',
+  component: AdminInstragamView
+      },
+        {
           path: '',
           redirect: '/admin/leads'
         }
       ]
     }
   ],
-  scrollBehavior() {
-    return { top: 0 }
+  scrollBehavior(to, from, savedPosition) {
+    // Se a rota tiver uma âncora (ex: /#blog), faz scroll suave até ao elemento
+    if (to.hash) {
+      return {
+        el: to.hash,
+        behavior: 'smooth',
+      };
+    }
+    if (savedPosition) {
+      return savedPosition;
+    }
+    // Caso contrário, vai para o topo normalmente
+    return { top: 0 };
   }
+
 })
+
+
 
 // Guarda de navegação moderna (sem o next)
 router.beforeEach((to) => {

@@ -1,10 +1,15 @@
 // src/shared/services/moverFooterService.js
 export const moverFooterService = {
   getData() {
+    // Insira aqui o número do telefone com DDI e DDD (ex: Brasil +55, Goiânia 62, seguido do número)
+    const numeroTelefone = "556286423232"; 
+    // Mensagem opcional padrão que já vai preenchida quando o cliente clica
+    const mensagemPadrao = encodeURIComponent("Olá! Gostaria de falar com um especialista da Mover Sistemas.");
+
     return {
-      // Logo ou ícone à esquerda (pode ser imagem ou ícone do Bootstrap)
+      // Logo ou ícone à esquerda
       logoType: "imagem", // "image" ou "icon"
-      logoIcon: "/mover2_logo.png", // Ícone de exemplo ou logo da marca
+      logoIcon: "/mover2_logo.png", 
       logoText: "Mover Sistemas",
       
       // Botões centrais
@@ -15,7 +20,7 @@ export const moverFooterService = {
       },
       whatsappCta: {
         text: "Vendas por whatsapp",
-        url: "https://wa.me/", // Insira o link do WhatsApp aqui
+        url: `https://wa.me/${numeroTelefone}?text=${mensagemPadrao}`,
         ariaLabel: "Entrar em contato via WhatsApp para vendas",
         icon: "bi bi-whatsapp"
       }

@@ -49,3 +49,13 @@ a {
 button {
   font-family: inherit;
 }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.15s ease;
+}
+
+.fade-from,
+.fade-leave-to {
+  opacity: 0;
+}

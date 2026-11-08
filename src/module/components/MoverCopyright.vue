@@ -8,23 +8,38 @@
     <!-- Container externo padronizado (max-width: 1750px) -->
     <div class="copyright-outer-container px-3 px-md-4 py-3">
       
-      <!-- WRAPPER COM FUNDO TRANSPARENTE -->
-      <div class="copyright-wrapper position-relative w-100 py-4 px-4 px-lg-5 d-flex flex-column align-items-end text-end">
+      <!-- WRAPPER COM FLEX PARA DIVIDIR ESQUERDA (REDES SOCIAIS) E DIREITA (LOGO/TEXTO) -->
+      <div class="copyright-wrapper position-relative w-100 py-4 px-4 px-lg-5 d-flex flex-column flex-md-row justify-content-between align-items-center">
         
-        <!-- LOGO À DIREITA -->
-        <div class="mb-2">
-          <img 
-            :src="copyrightData.logoSrc" 
-            :alt="copyrightData.logoAlt" 
-            class="copyright-logo object-fit-contain"
-          />
+        <!-- REDES SOCIAIS À ESQUERDA -->
+        <div class="social-links-container d-flex align-items-center gap-3 mb-3 mb-md-0">
+          <a 
+            v-for="(social, index) in copyrightData.socialLinks" 
+            :key="index"
+            :href="social.url" 
+            :aria-label="social.ariaLabel"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-icon-link text-custom-dark fs-5"
+          >
+            <i :class="social.icon"></i>
+          </a>
         </div>
 
-        <!-- COPYRIGHT ABAIXO DA LOGO EM COR AZUL (#0b2545) -->
-        <div>
-          <p class="copyright-text text-custom-dark m-0 small fw-medium">
-            {{ copyrightData.copyrightText }}
-          </p>
+        <!-- BLOCO DA DIREITA: LOGO E COPYRIGHT -->
+        <div class="d-flex flex-column align-items-center align-items-md-end text-center text-md-end">
+          <div class="mb-2">
+            <img 
+              :src="copyrightData.logoSrc" 
+              :alt="copyrightData.logoAlt" 
+              class="copyright-logo object-fit-contain"
+            />
+          </div>
+          <div>
+            <p class="copyright-text text-custom-dark m-0 small fw-medium">
+              {{ copyrightData.copyrightText }}
+            </p>
+          </div>
         </div>
 
       </div>
@@ -43,7 +58,7 @@ const { copyrightData } = useMoverCopyright()
 .mover-copyright-section {
   width: 100%;
   background-color: transparent !important;
-  top:-50px !important;
+  top: -50px !important;
 }
 
 .copyright-outer-container {
@@ -52,13 +67,8 @@ const { copyrightData } = useMoverCopyright()
   margin: 0 auto;
 }
 
-/* Wrapper transparente e alinhado à direita */
 .copyright-wrapper {
   background-color: transparent !important;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  text-align: right;
 }
 
 .copyright-logo {
@@ -66,10 +76,18 @@ const { copyrightData } = useMoverCopyright()
   width: auto;
 }
 
-/* Texto de copyright em azul escuro (#0b2545) */
+/* Cor base dos ícones e textos */
 .text-custom-dark {
   color: #0b2545 !important;
   opacity: 0.85;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Efeito Hover Verde (#8bc34a) nas Redes Sociais */
+.social-icon-link:hover {
+  color: #8bc34a !important;
+  transform: translateY(-2px);
+  opacity: 1;
 }
 
 .copyright-text {
@@ -77,11 +95,13 @@ const { copyrightData } = useMoverCopyright()
   letter-spacing: 0.3px;
 }
 
-/* Responsividade Mobile (centraliza ou mantém alinhado se preferir) */
+/* Responsividade Mobile */
 @media (max-width: 768px) {
   .copyright-wrapper {
+    flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
+    gap: 1.5rem;
   }
 }
 </style>

@@ -1,5 +1,6 @@
 <!-- src/modules/mover/views/MoverPaginaBlog1.vue -->
 <template>
+  <MoverNavbar />
   <section 
     class="mover-blog-section container-fluid p-0 position-relative my-5"
     role="region"
@@ -21,7 +22,7 @@
           <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb mb-0">
               <li v-for="(crumb, index) in postData.breadcrumbs" :key="index" class="breadcrumb-item">
-                <a :href="crumb.url" class="text-decoration-none text-custom-blue fw-medium">{{ crumb.label }}</a>
+                <a :href="crumb.url" class="text-decoration-none text-custom-blue fw-medium breadcrumb-link">{{ crumb.label }}</a>
               </li>
             </ol>
           </nav>
@@ -92,6 +93,7 @@
 </template>
 
 <script setup>
+import MoverNavbar from '@/shared/components/MoverNavbar.vue'
 import { useMoverPaginaBlog1 } from '../composables/useMoverPaginaBlog1'
 import { useParallax } from '@/shared/composables/useParallax'
 
@@ -192,6 +194,32 @@ const { postData, voltarParaBlog } = useMoverPaginaBlog1()
   color: #0b2545 !important;
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Efeito Hover com linha de 2px nos links do Breadcrumb */
+.breadcrumb-link {
+  position: relative;
+  text-decoration: none !important;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px; /* Linha com exatamente 2px de espessura */
+  bottom: -2px;
+  left: 0;
+  background-color: #8bc34a; /* Cor verde de destaque do projeto */
+  transition: width 0.3s ease;
+}
+
+.breadcrumb-link:hover {
+  color: #8bc34a !important;
+}
+
+.breadcrumb-link:hover::after {
+  width: 100%; /* A linha desliza e preenche a largura do link ao passar o rato */
 }
 
 /* Responsividade Mobile */

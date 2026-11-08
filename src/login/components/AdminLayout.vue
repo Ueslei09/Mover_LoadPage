@@ -20,6 +20,15 @@
         <router-link to="/admin/blog" class="sidebar-link" active-class="active">
           <i class="bi bi-file-text-fill me-2"></i> <span>Manutenção de Blog</span>
         </router-link>
+
+        <!-- NOVO: Link para a Gestão de Utilizadores -->
+  <router-link to="/admin/usuarios" class="sidebar-link" active-class="active">
+    <i class="bi bi-shield-lock-fill me-2"></i> <span>Utilizadores</span>
+  </router-link>
+       <!-- NOVO: Link para a Gestão de Posts do Instagram -->
+  <router-link to="/admin/instagram" class="sidebar-link" active-class="active">
+  <i class="bi bi-instagram me-2"></i> <span>Posts Instagram</span>
+</router-link>
       </nav>
 
       <div class="sidebar-footer p-3">
@@ -110,7 +119,7 @@ const logout = () => {
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  margin-top: -300px !important;
+  margin-top: -350px !important;
   gap: 4px;
   padding: 0 12px;
   /* Removido o -300px que empurrava o menu para cima do logo */

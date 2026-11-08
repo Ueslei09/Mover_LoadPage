@@ -77,9 +77,42 @@
             </div>
           </div>
 
-          <div class="mb-2">
-            <label class="form-label-custom">URL da Imagem (Mídia):</label>
-            <input v-model="form.media_url" type="text" class="form-select-custom" placeholder="https://exemplo.com/imagem.png" />
+          <!-- Regra de Negócio: Escolha entre URL ou Imagem do Computador -->
+          <div class="mb-3">
+            <label class="form-label-custom">Método da Imagem (Mídia):</label>
+            <div class="d-flex gap-3 mb-2">
+              <label class="d-flex align-items-center gap-1" style="font-size: 12px; cursor: pointer; color: #0b2545; font-weight: 600;">
+                <input type="radio" v-model="imageInputType" value="url" /> Inserir URL
+              </label>
+              <label class="d-flex align-items-center gap-1" style="font-size: 12px; cursor: pointer; color: #0b2545; font-weight: 600;">
+                <input type="radio" v-model="imageInputType" value="file" /> Enviar do Computador
+              </label>
+            </div>
+
+            <!-- Opção A: Campo de Texto para URL -->
+            <div v-if="imageInputType === 'url'">
+              <input 
+                v-model="form.media_url" 
+                type="text" 
+                class="form-select-custom" 
+                placeholder="https://exemplo.com/imagem.png" 
+              />
+            </div>
+
+            <!-- Opção B: Input de Ficheiro do PC -->
+            <div v-else>
+              <input 
+                type="file" 
+                @change="handleFileChange" 
+                class="form-select-custom" 
+                accept="image/*" 
+              />
+            </div>
+
+            <!-- Pré-visualização da imagem -->
+            <div v-if="form.media_url" class="mt-2 text-center p-2 bg-light rounded border">
+              <img :src="form.media_url" alt="Pré-visualização" style="max-height: 90px; border-radius: 6px; object-fit: cover;" />
+            </div>
           </div>
 
           <div class="mb-3">
@@ -109,11 +142,13 @@ const {
   showModal,
   editingId,
   form,
+  imageInputType,
   fetchPosts,
   openModal,
   closeModal,
   savePost,
-  removePost
+  removePost,
+  handleFileChange
 } = useBlog();
 
 onMounted(() => {

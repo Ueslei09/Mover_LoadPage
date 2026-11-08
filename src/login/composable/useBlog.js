@@ -7,13 +7,16 @@ export function useBlog() {
   const loading = ref(false);
   const errorMessage = ref('');
 
-  // Estados do Modal e Formulário
   const showModal = ref(false);
   const editingId = ref(null);
+  
+  // Controlo do tipo de entrada de imagem ('url' ou 'file')
+  const imageInputType = ref('url');
+
   const form = ref({
     title: '',
     author: '',
-    date: '',
+    date: new Date().toLocaleDateString(),
     media_url: '',
     paragraphs: ''
   });
@@ -30,13 +33,34 @@ export function useBlog() {
     }
   };
 
+  // Função para lidar com o ficheiro vindo do PC (converte para Base64)
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        form.value.media_url = e.target.result; // Atribui o resultado ao media_url guardado no form
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const openModal = (post = null) => {
     if (post) {
       editingId.value = post.id;
       form.value = { ...post };
+      // Se o post já tiver uma imagem em Base64 ou URL, define o tipo padrão como url
+      imageInputType.value = 'url';
     } else {
       editingId.value = null;
-      form.value = { title: '', author: '', date: '', media_url: '', paragraphs: '' };
+      imageInputType.value = 'url';
+      form.value = { 
+        title: '', 
+        author: '', 
+        date: new Date().toLocaleDateString(), 
+        media_url: '', 
+        paragraphs: '' 
+      };
     }
     showModal.value = true;
   };
@@ -61,7 +85,7 @@ export function useBlog() {
   };
 
   const removePost = async (id) => {
-    if (!confirm('Tem certeza que deseja remover este card/post do blog?')) return;
+    if (!confirm('Tem certeza que deseja remover este card do blog?')) return;
     try {
       await blogService.deletePost(id);
       await fetchPosts();
@@ -77,10 +101,12 @@ export function useBlog() {
     showModal,
     editingId,
     form,
+    imageInputType,
     fetchPosts,
     openModal,
     closeModal,
     savePost,
-    removePost
+    removePost,
+    handleFileChange
   };
 }
