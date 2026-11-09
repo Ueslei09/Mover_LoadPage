@@ -3,6 +3,9 @@
 // Variável de memória global do módulo para nunca perder o cache entre trocas de página
 let memoryCache = null;
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = `${API_BASE}/api/blog`;
+
 export const moverBlogService = {
   async fetchPosts(forceRefresh = false) {
     // Se já temos os dados em memória e não foi pedido refresh forçado, retorna instantaneamente (0ms)
@@ -11,7 +14,7 @@ export const moverBlogService = {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/blog');
+      const response = await fetch(API_URL);
       const result = await response.json();
 
       const postsFromApi = result.success && result.data ? result.data.map(post => ({

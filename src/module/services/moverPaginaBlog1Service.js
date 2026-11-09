@@ -1,8 +1,11 @@
 // src/modules/mover/services/moverPaginaBlogService.js
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = `${API_BASE}/api/blog`;
 export const moverPaginaBlogService = {
   async getPostBySlug(slug) {
     try {
-      const response = await fetch(`http://localhost:5000/api/blog`);
+      const response = await fetch(API_URL);
       const result = await response.json();
       
       if (result.success && result.data) {

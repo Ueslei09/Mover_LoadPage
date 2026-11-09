@@ -5,6 +5,9 @@ import { ref } from 'vue';
 const cachedPosts = ref(null);
 const loadingCache = ref(false);
 
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = `${API_BASE}/api/blog`;
+
 export function useCachedBlog() {
   const fetchPostsWithCache = async (forceRefresh = false) => {
     if (cachedPosts.value && !forceRefresh) {
@@ -13,7 +16,7 @@ export function useCachedBlog() {
 
     loadingCache.value = true;
     try {
-      const response = await fetch('http://localhost:5000/api/blog');
+      const response = await fetch(API_URL);
       const result = await response.json();
       if (result.success) {
         cachedPosts.value = result.data;
