@@ -1,9 +1,13 @@
 // src/login/services/leadService.js
+
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = `${API_BASE}/api/leads`;
+
 export const leadService = {
   async fetchLeads() {
     const token = localStorage.getItem('mover_token'); // Recupera o token JWT guardado no login
 
-    const response = await fetch('http://localhost:5000/api/leads', {
+    const response = await fetch(API_URL, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -23,7 +27,7 @@ export const leadService = {
   async updateLead(id, updateData) {
     const token = localStorage.getItem('mover_token');
 
-    const response = await fetch(`http://localhost:5000/api/leads/${id}`, {
+    const response = await fetch(`${API_URL}/${id}`, {
       method: 'PUT',
       headers: { 
         'Content-Type': 'application/json',

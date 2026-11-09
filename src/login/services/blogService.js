@@ -1,8 +1,12 @@
 // src/login/services/blogService.js
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = `${API_BASE}/api/blog`;
+
+
 export const blogService = {
   async fetchPosts() {
     const token = localStorage.getItem('mover_token');
-    const response = await fetch('http://localhost:5000/api/blog', {
+    const response = await fetch(API_URL, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -18,7 +22,7 @@ export const blogService = {
 
   async createPost(postData) {
     const token = localStorage.getItem('mover_token');
-    const response = await fetch('http://localhost:5000/api/blog', {
+    const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +39,7 @@ export const blogService = {
 
   async updatePost(id, postData) {
     const token = localStorage.getItem('mover_token');
-    const response = await fetch(`http://localhost:5000/api/blog/${id}`, {
+    const response = await fetch(`${API_URL}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +56,7 @@ export const blogService = {
 
   async deletePost(id) {
     const token = localStorage.getItem('mover_token');
-    const response = await fetch(`http://localhost:5000/api/blog/${id}`, {
+    const response = await fetch(`${API_URL}/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

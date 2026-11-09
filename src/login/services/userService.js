@@ -1,5 +1,6 @@
 // src/modules/mover/services/userService.js
-const API_URL = 'http://localhost:5000/api/usuarios';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = `${API_BASE}/api/usuarios`;
 
 export const userService = {
   async getUsers() {

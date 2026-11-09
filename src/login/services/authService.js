@@ -1,7 +1,10 @@
 // src/login/services/authService.js
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = `${API_BASE}/api/auth/login`;
+
 export const authService = {
   async login(email, senha) {
-    const response = await fetch('http://localhost:5000/api/auth/login', {
+    const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
