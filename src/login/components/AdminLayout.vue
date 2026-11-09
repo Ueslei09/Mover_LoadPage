@@ -119,7 +119,7 @@ const logout = () => {
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  margin-top: -350px !important;
+  margin-top: -200px !important;
   gap: 4px;
   padding: 0 12px;
   /* Removido o -300px que empurrava o menu para cima do logo */
