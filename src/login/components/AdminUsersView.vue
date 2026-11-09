@@ -104,6 +104,29 @@ const onSubmit = async () => {
 .text-custom-blue { color: #0b2545 !important; }
 .btn-mover-primary { background-color: #0b2545; border: none; }
 .btn-mover-primary:hover { background-color: #8bc34a; color: #0b2545 !important; }
-.modal-backdrop-custom { background-color: rgba(11, 37, 69, 0.6); backdrop-filter: blur(4px); }
-.modal-card { max-width: 500px; }
+
+/* Modal ajustado para cobrir apenas a área útil à direita da sidebar */
+.modal-backdrop-custom { 
+  position: fixed;
+  top: 0;
+  left: 260px; /* Começa exatamente onde termina a sidebar em desktop */
+  width: calc(100% - 260px); /* Ocupa o resto do ecrã */
+  height: 100vh;
+  background-color: rgba(11, 37, 69, 0.6); 
+  backdrop-filter: blur(4px); 
+  z-index: 1050;
+}
+
+.modal-card { 
+  max-width: 500px; 
+  width: 90%;
+}
+
+/* Ajuste automático para ecrãs menores onde a sidebar fica reduzida (80px) */
+@media (max-width: 992px) {
+  .modal-backdrop-custom {
+    left: 80px;
+    width: calc(100% - 80px);
+  }
+}
 </style>
