@@ -2,8 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { moverDemoService } from '../services/moverDemoService';
 
-const API_BASE = import.meta.env.VITE_API_URL || API_URL;
-const API_URL = `${API_BASE}/api/leads`;
+const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/leads`;
 
 export function useMoverDemoModal() {
   const isModalOpen = ref(false);
