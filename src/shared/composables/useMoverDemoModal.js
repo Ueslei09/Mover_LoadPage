@@ -42,7 +42,7 @@ export function useMoverDemoModal() {
 
     try {
       // Envia os dados para a nossa API Node.js na porta 5000
-      const response = await fetch('http://localhost:5000/api/leads', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
