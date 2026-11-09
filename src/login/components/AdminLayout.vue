@@ -63,12 +63,13 @@ const logout = () => {
 };
 </script>
 
-<style scoped>
+<<style scoped>
 .admin-layout-wrapper {
   display: flex;
   min-height: 100vh;
   background-color: #e8e9eb;
   font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
 }
 
 .admin-sidebar {
@@ -119,10 +120,8 @@ const logout = () => {
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  margin-top: -200px !important;
   gap: 4px;
   padding: 0 12px;
-  /* Removido o -300px que empurrava o menu para cima do logo */
 }
 
 .sidebar-link {
@@ -166,19 +165,21 @@ const logout = () => {
   background-color: #fecaca;
 }
 
+/* --- CONTEÚDO PRINCIPAL COM MARGEM FIXA E SEGURA --- */
 .admin-main-content {
-  margin-left: 260px;
-  flex-grow: 1;
+  margin-left: 260px; /* Espaço exato da sidebar em desktop */
+  width: calc(100% - 260px);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  transition: margin-left 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .admin-topbar {
   background-color: #ffffff;
   border-bottom: 1px solid #cbd5e0;
   box-shadow: 0 2px 10px rgba(11, 37, 69, 0.03);
+  width: 100%;
 }
 
 .badge-role {
@@ -190,10 +191,10 @@ const logout = () => {
   font-weight: 600;
 }
 
-/* --- RESPONSIVIDADE MOBILE (Dispositivos menores que 768px) --- */
-@media (max-width: 768px) {
+/* --- RESPONSIVIDADE MOBILE / TELAS MENORES --- */
+@media (max-width: 992px) {
   .admin-sidebar {
-    width: 75px;
+    width: 80px;
   }
 
   .admin-sidebar .brand-subtitle,
@@ -226,7 +227,8 @@ const logout = () => {
   }
 
   .admin-main-content {
-    margin-left: 75px;
+    margin-left: 80px; /* Ajusta exato para a largura menor da sidebar */
+    width: calc(100% - 80px);
   }
 }
 </style>
