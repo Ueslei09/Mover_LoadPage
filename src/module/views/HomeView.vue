@@ -5,13 +5,16 @@
 
     <!-- Banner Principal com Cantos Arredondados e Card Flutuante -->
     <MoverBanner />
+
+    <MoverVideoApresentation />
     
     <!-- Demais seções... -->
     <div id="solucoes">
       <MoverSolutions />
     </div>
-
     <MoverAbout />
+
+    <!--<MoverAbout />
     <MoverCuriosidades />
     
     <div id="blog">
@@ -22,7 +25,7 @@
     <MoverProvaSocial />
     <MoverFAQ />
     
-    <!-- Footer CTA específico da Home -->
+     Footer CTA específico da Home-->
     <MoverFooterCTA />
     
     <MoverCopyright />
@@ -44,4 +47,5 @@ import MoverBanner2 from '../components/MoverBanner2.vue'
 import MoverProvaSocial from '../components/MoverProvaSocial.vue'
 import MoverFAQ from '../components/MoverFAQ.vue'
 import MoverCopyright from '../components/MoverCopyright.vue'
+import MoverVideoApresentation from '../components/MoverVideoApresentation.vue'
 </script>

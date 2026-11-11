@@ -7,27 +7,17 @@
     role="region"
     aria-label="Apresentação Mpro Sistemas"
   >
-    <!-- Container externo que garante o espaçamento elegante nas laterais -->
     <div class="banner-outer-container px-3 px-md-4 py-3">
       
-      <!-- WRAPPER ARREDONDADO COM FUNDO AZUL E SOMBRA À DIREITA -->
+      <!-- WRAPPER ARREDONDADO COM FUNDO AZUL -->
       <div class="mpro-wrapper position-relative overflow-hidden d-flex flex-column">
         
         <div class="container-fluid px-3 px-md-5 z-2 position-relative w-100 py-5">
           <div class="row align-items-center justify-content-between w-100 m-0">
             
-            <!-- COLUNA DE TEXTOS E CTA (Lado Esquerdo) - Z-index mais alto para garantir clique -->
-            <div class="col-12 col-lg-5 hero-content-box text-center text-lg-start py-5 position-relative z-3">
+            <!-- COLUNA DE TEXTOS E CTA (Lado Esquerdo - 50%) -->
+            <div class="col-12 col-lg-6 hero-content-box text-center text-lg-start py-5 position-relative z-3">
               
-              <!-- LOGO / TÍTULO EM IMAGEM -->
-              <div class="mb-4">
-                <img 
-                  :src="mproData.logoImg" 
-                  :alt="mproData.logoAlt"
-                  class="mpro-brand-logo img-fluid"
-                />
-              </div>
-
               <!-- SUBTÍTULO PERSONALIZADO -->
               <h1 class="hero-subtitle fw-bold text-white mb-4">
                 <span>{{ mproData.subTitlePart1 }}</span>
@@ -54,14 +44,56 @@
 
             </div>
 
-            <!-- COLUNA DO CARD COM A IMAGEM -->
-            <div class="col-12 col-lg-6 hero-image-col text-center position-relative">
-              <div class="device-card-wrapper p-2 p-md-5">
-                <img 
-                  :src="mproData.heroImage" 
-                  :alt="mproData.heroImageAlt"
-                  class="img-fluid devices-mockup"
-                />
+            <!-- COLUNA DO CARROSSEL DE VÍDEOS (Lado Direito - 50%) -->
+            <div class="col-12 col-lg-6 hero-image-col text-center position-relative px-0">
+              <div class="carousel-container-wrapper position-relative w-100">
+                
+                <!-- Degradês laterais (Fade esquerdo e direito) -->
+                <div class="gradient-overlay-left"></div>
+                <div class="gradient-overlay-right"></div>
+
+                <!-- Slides do Carrossel -->
+                <div class="carousel-slides-track">
+                  <div 
+                    v-for="(slide, index) in mproData.slides" 
+                    :key="index"
+                    class="carousel-slide"
+                    :class="{ active: currentSlide === index }"
+                  >
+                    <!-- Se for Vídeo -->
+                    <video 
+                      v-if="slide.type === 'video'"
+                      autoplay 
+                     
+                      controls
+                      playsinline 
+                      class="slide-media"
+                    >
+                      <source :src="slide.src" type="video/mp4" />
+                      Seu navegador não suporta vídeos.
+                    </video>
+
+                    <!-- Se for Imagem (Fallback) -->
+                    <img 
+                      v-else 
+                      :src="slide.src" 
+                      :alt="slide.alt"
+                      class="slide-media img-fluid"
+                    />
+                  </div>
+                </div>
+
+                <!-- Indicadores (Dots) do carrossel -->
+                <div class="carousel-indicators-custom">
+                  <button 
+                    v-for="(_, index) in mproData.slides" 
+                    :key="index"
+                    @click="currentSlide = index"
+                    :class="{ active: currentSlide === index }"
+                    :aria-label="`Slide ${index + 1}`"
+                  ></button>
+                </div>
+
               </div>
             </div>
 
@@ -78,7 +110,8 @@
 import { useMpro } from '../composables/useMoverAbout.js'
 import { useParallax } from '@/shared/composables/useParallax'
 
-const { mproData, handleActionClick } = useMpro()
+
+const { mproData, currentSlide, handleActionClick } = useMpro()
 const { isVisible, elementRef } = useParallax(0.05)
 </script>
 
@@ -95,7 +128,6 @@ const { isVisible, elementRef } = useParallax(0.05)
   margin: 0 auto;
 }
 
-/* Wrapper principal com cantos arredondados, fundo azul e sombra estritamente à direita */
 .mpro-wrapper {
   position: relative;
   background-color: #0b2545;
@@ -118,21 +150,20 @@ const { isVisible, elementRef } = useParallax(0.05)
   transform: translateY(0);
 }
 
-.mpro-brand-logo {
-  max-height: 150px;
-  object-fit: contain;
-  margin-bottom: -20px;
+/* Força rigorosamente 50% / 50% no Desktop */
+.hero-content-box {
+  flex: 0 0 50% !important;
+  max-width: 50% !important;
 }
 
-.hero-content-box {
-  flex: 0 0 52% !important;
-  max-width: 52% !important;
+.hero-image-col {
+  flex: 0 0 50% !important;
+  max-width: 50% !important;
 }
 
 .hero-subtitle {
   font-size: clamp(2rem, 3.2vw, 3.2rem) !important;
   white-space: normal !important;
-  word-break: normal !important;
 }
 
 .hero-subtitle span {
@@ -149,67 +180,140 @@ const { isVisible, elementRef } = useParallax(0.05)
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Garante que o container do botão tem posição e z-index seguros para interatividade */
 .cta-button-wrapper {
   position: relative;
   z-index: 10;
 }
 
-/* Botão padrão com as cores do projeto e efeito hover */
 .mpro-cta-btn {
-  background-color: #8bc34a !important; /* Verde principal do projeto */
+  background-color: #8bc34a !important;
   color: #ffffff !important;
   border: none;
   transition: all 0.3s ease-in-out;
   font-size: 0.9rem;
   letter-spacing: 0.5px;
-  cursor: pointer; /* Garante o cursor de clique */
+  cursor: pointer;
   position: relative;
   z-index: 11;
 }
 
 .mpro-cta-btn:hover,
 .mpro-cta-btn:focus {
-  background-color: #a6b9c7 !important; /* Tom de verde ligeiramente mais escuro no hover */
+  background-color: #a6b9c7 !important;
   color: #0f0f0f !important;
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(139, 195, 74, 0.4);
 }
 
-.hero-image-col {
+/* --- ESTILOS DO CARROSSEL & DEGRADÊS --- */
+.carousel-container-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.carousel-slides-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Configuração desktop para o card/imagem */
-.device-card-wrapper {
-  background-color: transparent !important;
-  width: 300% !important;
-  max-width: 300% !important;
-  left: 100px !important;
+.carousel-slide {
   position: absolute;
-  z-index: 1; /* Mantém a imagem abaixo dos textos/botão para não bloquear cliques */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.devices-mockup {
-  max-width: 100%;
+.carousel-slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slide-media {
+  width: 100%;
   height: auto;
-  object-fit: contain;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-/* Ajustes específicos para mobile e tablets */
+/* Degradê (Fade) do lado esquerdo e direito */
+.gradient-overlay-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: 100%;
+  background: linear-gradient(to right, #0b2545, transparent);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.gradient-overlay-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 100%;
+  background: linear-gradient(to left, #0b2545, transparent);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Indicadores personalizados do carrossel */
+.carousel-indicators-custom {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 6;
+}
+
+.carousel-indicators-custom button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carousel-indicators-custom button.active {
+  background-color: #8bc34a;
+  width: 24px;
+  border-radius: 5px;
+}
+
+/* --- AJUSTES MOBILE / TABLET --- */
 @media (max-width: 992px) {
   .mpro-wrapper {
     border-radius: 16px !important;
   }
   
-  .hero-content-box {
-    text-align: center !important;
-    margin-bottom: 1rem;
+  .hero-content-box,
+  .hero-image-col {
     flex: 0 0 100% !important;
     max-width: 100% !important;
-    padding-bottom: 0 !important;
   }
 
   .hero-subtitle {
@@ -221,25 +325,9 @@ const { isVisible, elementRef } = useParallax(0.05)
     margin-right: auto;
   }
 
-  /* Reseta o posicionamento absoluto no mobile para a imagem ficar abaixo do botão */
-  .hero-image-col {
-    width: 100%;
-    padding: 1rem 0 0 0;
-  }
-
-  .device-card-wrapper {
-    position: relative !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    left: 0 !important;
-    padding: 0.5rem !important;
-    z-index: 5;
-  }
-
-  .devices-mockup {
-    max-width: 85% !important; /* Diminui o tamanho da imagem no mobile */
-    margin: 0 auto;
-    display: block;
+  .carousel-container-wrapper {
+    min-height: 280px;
+    margin-top: 1.5rem;
   }
 }
 </style>

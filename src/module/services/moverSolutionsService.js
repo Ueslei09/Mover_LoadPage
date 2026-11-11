@@ -11,48 +11,48 @@ export const moverSolutionsService = {
           id: 1,
           title: 'Financeiro',
           icon: 'bi bi-briefcase',
-          description: 'Centralize finanças, vendas, suprimentos e fiscal para ganhar visibilidade, padronizar processos e decidir com dados confiáveis.',
-          features: ['Mercado e vendas', 'Suprimentos', 'Finanças', 'Fiscal'],
+          description: 'O Módulo Financeiro do ERP Mover Sistemas é o coração administrativo da empresa, projetado para garantir saúde de caixa, previsibilidade e controle absoluto sobre todas as entradas e saídas financeiras de forma automatizada e segura.',
+          features: ['Conta a Receber', 'Contas a Pagar', 'Caixas', 'Fluxo de Caixa'],
           mediaType: 'image',
-          mediaUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80'
+          mediaUrl: 'moversolucoes2_imagem.jpg'
         },
         {
           id: 2,
-          title: 'Contábil',
+          title: 'Pedidos de Vendas',
           icon: 'bi bi-gear-wide-connected',
-          description: 'Controle o chão de fábrica, ordens de produção, custos e rastreabilidade de ponta a ponta com alta eficiência operacional.',
-          features: ['Controle de Produção', 'Ordens de Serviço', 'Gestão de Insumos', 'Custos Industriais'],
+          description: 'O Módulo de Vendas do ERP Mover Sistemas foi desenvolvido para centralizar, agilizar e dar total controle sobre a operação comercial de ponta a ponta. Ele conecta o balcão, o e-commerce, a equipe de campo e o setor de faturamento em um ecossistema inteligente, eliminando gargalos e erros manuais.',
+          features: ['Pedidos de Vendas', 'Faturamento', 'PDV', 'Documentos Fiscais'],
           mediaType: 'image',
-          mediaUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80'
+          mediaUrl: 'moversolucoes1_imagem.png'
         },
         {
           id: 3,
-          title: 'Estoque',
+          title: 'Compras',
           icon: 'bi bi-truck',
-          description: 'Otimize armazéns, rotas de entrega, estoque e cadeia de suprimentos para entregas ágeis e sem gargalos.',
-          features: ['Gestão de Armazém', 'Roteirização', 'Controle de Estoque', 'Expedição'],
+          description: 'O Módulo de Compras do ERP Mover Sistemas foi projetado para transformar o setor de suprimentos em um centro estratégico de economia e eficiência. Ele automatiza desde a identificação da necessidade de reposição até o recebimento e o lançamento fiscal das mercadorias.',
+          features: ['Pedido de Compra', 'Importar XML', 'Documentos Fiscais'],
           mediaType: 'image',
-          mediaUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80'
+          mediaUrl: '/moversolucoes8.jpg'
         },
         {
           id: 4,
-          title: 'Gestão Fiscal',
+          title: 'Movimentações',
           icon: 'bi bi-file-earmark-text',
-          description: 'Garanta total conformidade com o fisco, apuração automatizada de impostos e entrega de obrigações acessórias sem riscos.',
-          features: ['Apuração de Impostos', 'Emissão de Notas', 'Obrigações Acessórias', 'Auditoria Fiscal'],
+          description: 'O Módulo de Movimentações do ERP Mover Sistemas integra de ponta a ponta a cadeia de suprimentos e a saída de mercadorias, transformando o fluxo operacional em um processo unificado, inteligente e livre de redigitação.',
+          features: ['Compras', 'Vendas', 'Estoque', 'Faturamento'],
           mediaType: 'image',
-          mediaUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80'
+          mediaUrl: '/moversolucoes5_imagem.jpg'
         },
         {
           id: 5,
-          title: 'Varejo',
+          title: 'Cadastros',
           icon: 'bi bi-shop',
-          description: 'Agilize o atendimento no balcão e caixas, integrando frente de loja ao retaguarda fiscal em tempo real.',
-          features: ['Frente de Caixa (PDV)', 'Controle de Lojas', 'Promoções e Fidelidade', 'Fechamento de Caixa'],
-          mediaType: 'video',
-          mediaUrl: '/mover2_video.mp4'
+          description: 'O Módulo de Cadastros do ERP Mover Sistemas é a base estrutural de todo o sistema, projetado para garantir agilidade no preenchimento, confiabilidade das informações e centralização de dados essenciais para as rotinas fiscais, comerciais e financeiras.',
+          features: ['Pessoas', 'Produtos', 'Usuários', 'Lojas'],
+          mediaType: 'image',
+          mediaUrl: '/moversolucoes7_imagem.jpg'
         },
-        {
+        /*{
           id: 6,
           title: 'Serviços',
           icon: 'bi bi-headset',
@@ -60,7 +60,7 @@ export const moverSolutionsService = {
           features: ['Contratos de Serviço', 'Ordens de Atendimento', 'Faturamento por Horas', 'Portal do Cliente'],
           mediaType: 'image',
           mediaUrl: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80'
-        }
+        }*/
       ]
     }
   }

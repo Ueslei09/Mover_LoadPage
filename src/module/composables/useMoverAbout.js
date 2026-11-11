@@ -4,14 +4,33 @@ import { mproService } from '../services/MoverAboutService.js'
 
 export function useMpro() {
   const mproData = ref(mproService.getHeroData())
+  const currentSlide = ref(0)
+  let slideTimeout = null
 
-  // Lógica opcional para tornar a navbar transparente ao entrar nesta view
+  const scheduleNextSlide = () => {
+    // Define o tempo: 15000ms (15s) se for o índice 0, senão 5000ms (5s)
+    const delay = currentSlide.value === 0 ? 15000 : 5000
+
+    if (slideTimeout) clearTimeout(slideTimeout)
+
+    slideTimeout = setTimeout(() => {
+      // Avança para o próximo slide em looping
+      currentSlide.value = (currentSlide.value + 1) % mproData.value.slides.length
+      
+      // Agenda o próximo ciclo recursivamente
+      scheduleNextSlide()
+    }, delay)
+  }
+
   onMounted(() => {
     document.body.classList.add('mpro-page-active')
+    // Inicia o ciclo do carrossel ao montar
+    scheduleNextSlide()
   })
 
   onUnmounted(() => {
     document.body.classList.remove('mpro-page-active')
+    if (slideTimeout) clearTimeout(slideTimeout)
   })
 
   function handleActionClick() {
@@ -20,6 +39,7 @@ export function useMpro() {
 
   return {
     mproData,
+    currentSlide,
     handleActionClick
   }
 }

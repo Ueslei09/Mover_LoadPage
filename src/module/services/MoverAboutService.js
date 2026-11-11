@@ -2,10 +2,9 @@
 export const mproService = {
   getHeroData() {
     return {
-      logoImg: "/logmover1pretoebranco.png", // Substitua pelo caminho da sua logo Mpro branca ou correspondente
+      logoImg: "/logmover1pretoebranco.png",
       logoAlt: "Logo Mpro Sistemas",
       
-      // Subtítulo dividido para aplicar a cor #8bc34a na palavra do meio
       subTitlePart1: "Descubra como a ",
       highlightWord: "Mover Sistemas",
       subTitlePart2: " transforma a gestão da empresa",
@@ -15,8 +14,15 @@ export const mproService = {
       buttonText: "Quer saber mais?",
       buttonAriaLabel: "Fale com nossos especialistas sobre o Mpro",
       
-      heroImage: "/move6_imagem.png", // Mockup do computador/tablet igual ao print
-      heroImageAlt: "Mpro em funcionamento no computador, tablet e celular"
+      // Array com os 6 slides (suporta 'video' ou 'image')
+      slides: [
+        { type: 'video', src: '/mover6videoabout.mp4', alt: 'Demonstração Mpro 1' },
+        { type: 'image', src: '/moverbout1_imagem.jpg', alt: 'Demonstração Mpro 2' },
+        { type: 'image', src: '/moverabout2_imagem.jpg', alt: 'Demonstração Mpro 3' },
+        { type: 'image', src: '/moverabut3_image.jpg', alt: 'Demonstração Mpro 4' },
+        { type: 'image', src: '/moverabout4_imagem.jpg', alt: 'Demonstração Mpro 5' },
+        { type: 'image', src: '/moverabout5_imagem.jpg', alt: 'Demonstração Mpro 6' }
+      ]
     }
   }
 }

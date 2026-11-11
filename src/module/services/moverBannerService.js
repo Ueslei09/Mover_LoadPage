@@ -2,7 +2,7 @@
 export const moverBannerService = {
   getData() {
     return {
-      bgImage: "/moverLoadpager1_imagem.jpg",
+      bgImage: "/moverloadpager2_imagem.jpg",
       imageAlt: "Profissional sorrindo gerindo a empresa com controle",
       titleHighlight: "Gestão Empresarial",
       titleRest: "para crescer com controle.",

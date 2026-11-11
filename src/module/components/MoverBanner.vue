@@ -77,9 +77,9 @@
         </div>
 
         <!-- PARTE INFERIOR: Carrossel de Logos Contínuo (Rodapé do Banner) -->
-        <div class="banner-footer-carousel bg-white py-4 px-4 px-lg-5 d-flex flex-column flex-lg-row align-items-center justify-content-between gap-4">
+        <!--<div class="banner-footer-carousel bg-white py-4 px-4 px-lg-5 d-flex flex-column flex-lg-row align-items-center justify-content-between gap-4">
           
-          <!-- Texto à Esquerda -->
+           Texto à Esquerda 
           <div class="clients-text-col text-center text-lg-start flex-shrink-0">
             <h2 class="clients-title fw-bold m-0">
               <span class="d-block text-primary-dark">{{ bannerData.clientsTitle }}</span>
@@ -87,14 +87,14 @@
             </h2>
           </div>
 
-          <!-- Carrossel Infinito Estilo Marquee (Fluido e Contínuo Igual ao Vídeo) -->
+           Carrossel Infinito Estilo Marquee (Fluido e Contínuo Igual ao Vídeo)
           <div 
             class="clients-carousel-col w-100 position-relative overflow-hidden" 
             tabIndex="0" 
             aria-label="Carrossel de empresas parceiras"
           >
             <div class="marquee-track">
-              <!-- Bloco 1 de Logos -->
+               Bloco 1 de Logos 
               <div class="marquee-group d-flex align-items-center">
                 <div 
                   v-for="client in bannerData.slides" 
@@ -109,7 +109,7 @@
                   />
                 </div>
               </div>
-              <!-- Bloco 2 Duplicado para fechar o loop infinito sem saltos -->
+               Bloco 2 Duplicado para fechar o loop infinito sem saltos 
               <div class="marquee-group d-flex align-items-center" aria-hidden="true">
                 <div 
                   v-for="client in bannerData.slides" 
@@ -126,13 +126,13 @@
               </div>
             </div>
 
-            <!-- Leitores de Tela (Acessibilidade WCAG) -->
+             Leitores de Tela (Acessibilidade WCAG) 
             <div class="visually-hidden" aria-live="polite">
               Apresentando carrossel contínuo de empresas parceiras e clientes Mover.
             </div>
           </div>
 
-        </div>
+        </div>-->
 
       </div>
 
