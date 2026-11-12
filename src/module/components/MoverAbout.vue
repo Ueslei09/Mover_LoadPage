@@ -32,14 +32,15 @@
 
               <!-- BOTÃO COM COR DO PROJETO E HOVER -->
               <div class="cta-button-wrapper">
-                <button 
+                <a
+                  href="#demonstracao"
                   @click="handleActionClick"
                   type="button"
                   class="btn mpro-cta-btn fw-semibold px-5 py-3 rounded-pill text-uppercase shadow-sm"
                   :aria-label="mproData.buttonAriaLabel"
                 >
                   {{ mproData.buttonText }}
-                </button>
+                </a>
               </div>
 
             </div>

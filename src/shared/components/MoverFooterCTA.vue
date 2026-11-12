@@ -8,10 +8,10 @@
     aria-label="Barra flutuante de atendimento Mover"
   >
     <div class="container-fluid px-0">
-      <div class="footer-card py-2.5 px-4 shadow-lg d-flex align-items-center justify-content-center w-100 position-relative">
+      <div class="footer-card py-2 px-2 px-md-4 shadow-lg d-flex align-items-center justify-content-center w-100 position-relative">
         
-        <!-- LADO ESQUERDO: Logo ou Ícone -->
-        <div class="footer-left position-absolute start-0 ms-4 d-none d-lg-flex align-items-center">
+        <!-- LADO ESQUERDO: Logo ou Ícone (Apenas em telas maiores) -->
+        <div class="footer-left position-absolute start-0 ms-3 d-none d-lg-flex align-items-center">
           <div class="logo-badge d-flex align-items-center justify-content-center rounded-circle shadow-sm">
             <template v-if="footerData.logoType === 'imagem'">
               <img :src="footerData.logoIcon" :alt="footerData.logoText" class="img-fluid">
@@ -22,13 +22,13 @@
           </div>
         </div>
 
-        <!-- CENTRO: Botões de Ação Perfeitamente Centralizados -->
-        <div class="footer-actions d-flex flex-row align-items-center justify-content-center gap-3">
+        <!-- CENTRO: Botões de Ação Ajustados para Mobile -->
+        <div class="footer-actions d-flex flex-row align-items-center justify-content-center gap-2 gap-md-3 w-100">
           
           <!-- Botão Falar com Especialista -->
           <a 
             :href="footerData.primaryCta.url" 
-            class="btn btn-especialista fw-semibold px-4 py-2 rounded-2 text-uppercase shadow-sm text-center text-nowrap"
+            class="btn btn-especialista fw-semibold py-2 px-2 px-md-4 rounded-2 text-uppercase shadow-sm text-center text-nowrap"
             :aria-label="footerData.primaryCta.ariaLabel"
           >
             {{ footerData.primaryCta.text }}
@@ -39,11 +39,11 @@
             :href="footerData.whatsappCta.url" 
             target="_blank" 
             rel="noopener noreferrer"
-            class="btn btn-whatsapp fw-semibold px-4 py-2 rounded-2 text-white text-uppercase shadow-sm text-center d-flex align-items-center justify-content-center gap-2 text-nowrap"
+            class="btn btn-whatsapp fw-semibold py-2 px-2 px-md-4 rounded-2 text-white text-uppercase shadow-sm text-center d-flex align-items-center justify-content-center gap-1 gap-md-2 text-nowrap"
             :aria-label="footerData.whatsappCta.ariaLabel"
           >
             <!-- Ícone com animação de pulsação -->
-            <i :class="footerData.whatsappCta.icon" class="fs-5 whatsapp-animated-icon"></i>
+            <i :class="footerData.whatsappCta.icon" class="fs-6 fs-md-5 whatsapp-animated-icon"></i>
             <span>{{ footerData.whatsappCta.text }}</span>
           </a>
 
@@ -102,12 +102,11 @@ const { isVisible, elementRef } = useParallax(0.01)
   color: var(--mover-primary-blue, #0b2545);
 }
 
-/* Tamanho e estilo dos botões centralizados */
+/* Tamanho e estilo padrão dos botões */
 .btn-especialista,
 .btn-whatsapp {
-  font-size: 0.85rem !important;
-  letter-spacing: 0.3px;
-  white-space: nowrap;
+  font-size: 0.85rem;
+  letter-spacing: 0.2px;
 }
 
 /* Botão "Falar com especialista" */
@@ -141,20 +140,11 @@ const { isVisible, elementRef } = useParallax(0.01)
   box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3) !important;
 }
 
-/* ANIMAÇÃO DO ÍCONE DO WHATSAPP (Efeito de Pulsação Suave) */
+/* ANIMAÇÃO DO ÍCONE DO WHATSAPP */
 @keyframes whatsappPulse {
-  0% {
-    transform: scale(1);
-    text-shadow: 0 0 0 rgba(255, 255, 255, 0.7);
-  }
-  50% {
-    transform: scale(1.2);
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
-  }
-  100% {
-    transform: scale(1);
-    text-shadow: 0 0 0 rgba(255, 255, 255, 0.7);
-  }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
 .whatsapp-animated-icon {
@@ -162,20 +152,28 @@ const { isVisible, elementRef } = useParallax(0.01)
   animation: whatsappPulse 1.8s infinite ease-in-out;
 }
 
-/* Responsividade Mobile */
-@media (max-width: 992px) {
+/* RESPONSIVIDADE MOBILE (Ajuste fino para telas pequenas como 360px) */
+@media (max-width: 576px) {
   .footer-card {
-    padding: 0.5rem 0.8rem !important;
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.4rem !important;
+    padding-left: 0.4rem !important;
+    padding-right: 0.4rem !important;
   }
+  
   .footer-actions {
-    width: 100% !important;
-    justify-content: center !important;
+    gap: 0.35rem !important; /* Reduz o espaço entre os botões para caber perfeitamente */
   }
+
   .btn-especialista,
   .btn-whatsapp {
-    font-size: 0.75rem !important;
-    padding: 0.4rem 0.8rem !important;
-    flex: 1;
+    font-size: 0.64rem !important; /* Fonte proporcional para não quebrar em telas de 360px */
+    padding-left: 0.3rem !important;
+    padding-right: 0.3rem !important;
+    padding-top: 0.45rem !important;
+    padding-bottom: 0.45rem !important;
+    flex: 1; /* Divide o espaço de forma igual e fluida */
+    letter-spacing: -0.2px; /* Economiza largura horizontal */
   }
 }
 </style>

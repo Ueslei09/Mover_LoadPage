@@ -1,27 +1,52 @@
-// src/modules/mover/composables/useScrollVideo.js
+// src/shared/composables/useScrollVideo.js
 import { ref, onMounted, onUnmounted } from 'vue'
-import { moverVideoService } from '@/module/services/moverVideoService'
 
 export function useScrollVideo() {
-  const videoData = ref(moverVideoService.getData())
   const videoRef = ref(null)
   const isPlaying = ref(false)
+  const showOverlay = ref(true)
   let observer = null
 
   const toggleVideoPlay = () => {
     if (!videoRef.value) return
     if (videoRef.value.paused) {
-      videoRef.value.play()
+      videoRef.value.play().catch(() => {})
     } else {
       videoRef.value.pause()
     }
+  }
+
+  const handlePlay = () => {
+    isPlaying.value = true
+    showOverlay.value = false // Esconde o botão ao dar play
+  }
+
+  const handlePause = () => {
+    isPlaying.value = false
+    showOverlay.value = true // Mostra o botão ao pausar
+  }
+
+  // Disparado quando o vídeo chega ao fim
+  const handleEnded = () => {
+    isPlaying.value = false
+    showOverlay.value = true // Reaparece o botão de play quando o vídeo termina
+  }
+
+  const handleVideoClick = () => {
+    if (isPlaying.value) {
+      showOverlay.value = true
+    }
+  }
+
+  const handleOverlayClick = () => {
+    toggleVideoPlay()
   }
 
   onMounted(() => {
     const options = {
       root: null,
       rootMargin: '0px',
-      threshold: 0.5 // Dispara quando 50% do vídeo aparecer na tela
+      threshold: 0.5
     }
 
     observer = new IntersectionObserver((entries) => {
@@ -29,9 +54,7 @@ export function useScrollVideo() {
         if (!videoRef.value) return
 
         if (entry.isIntersecting) {
-          videoRef.value.play().catch(() => {
-            // Ignora bloqueios automáticos do navegador se houver restrição
-          })
+          videoRef.value.play().catch(() => {})
         } else {
           videoRef.value.pause()
         }
@@ -50,9 +73,14 @@ export function useScrollVideo() {
   })
 
   return {
-    videoData,
     videoRef,
     isPlaying,
-    toggleVideoPlay
+    showOverlay,
+    toggleVideoPlay,
+    handlePlay,
+    handlePause,
+    handleEnded,
+    handleVideoClick,
+    handleOverlayClick
   }
 }

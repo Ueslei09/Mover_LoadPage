@@ -45,8 +45,8 @@ export const moverBlogService = {
     const posts = await this.fetchPosts(forceRefresh);
     return {
       tag: 'BLOG',
-      titlePrefix: 'Mover',
-      titleHighlight: 'Sistemas',
+      titlePrefix: 'Mover ',
+      titleHighlight: ' Sistemas',
       posts: posts
     };
   }

@@ -4,8 +4,12 @@
     <MoverNavbar />
 
     <!-- Banner Principal com Cantos Arredondados e Card Flutuante -->
-    <MoverBanner />
-
+   
+      
+    <div id="demonstracao">
+      <MoverBanner />
+    </div>
+  
     <MoverVideoApresentation />
     
     <!-- Demais seções... -->

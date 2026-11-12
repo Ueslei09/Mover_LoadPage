@@ -2,7 +2,7 @@
 export const moverFooterService = {
   getData() {
     // Insira aqui o número do telefone com DDI e DDD (ex: Brasil +55, Goiânia 62, seguido do número)
-    const numeroTelefone = "556286423232"; 
+    const numeroTelefone = "5562994077581"; 
     // Mensagem opcional padrão que já vai preenchida quando o cliente clica
     const mensagemPadrao = encodeURIComponent("Olá! Gostaria de falar com um especialista da Mover Sistemas.");
 
@@ -15,7 +15,7 @@ export const moverFooterService = {
       // Botões centrais
       primaryCta: {
         text: "Falar com especialista",
-        url: "#contato",
+        url: "#demonstracao",
         ariaLabel: "Falar com um especialista da Mover Sistemas"
       },
       whatsappCta: {

@@ -20,7 +20,7 @@
           </span>
           <h2 class="blog-main-title fw-bold text-white">
             <span>{{ blogData?.titlePrefix || 'Mover' }}</span> 
-            <span class="blog-title-highlight">{{ blogData?.titleHighlight || ' Sistemas' }}</span>
+            <span class="blog-title-highlight">{{ blogData?.titleHighlight || 'Sistemas' }}</span>
           </h2>
         </div>
 
@@ -161,6 +161,7 @@ const { isVisible, elementRef } = useParallax(0.05)
 }
 
 .blog-title-highlight {
+  margin-left: 0.5rem;
   color: #ffffff !important;
 }
 

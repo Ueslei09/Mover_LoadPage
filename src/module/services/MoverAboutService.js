@@ -13,6 +13,7 @@ export const mproService = {
       
       buttonText: "Quer saber mais?",
       buttonAriaLabel: "Fale com nossos especialistas sobre o Mpro",
+      buttonUrl: "#demonstracao",
       
       // Array com os 6 slides (suporta 'video' ou 'image')
       slides: [

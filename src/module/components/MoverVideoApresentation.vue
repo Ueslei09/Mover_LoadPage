@@ -27,13 +27,20 @@
             class="presentation-video w-100 h-100"
             controls
             playsinline
-            @play="isPlaying = true"
-            @pause="isPlaying = false"
+            @play="handlePlay"
+            @pause="handlePause"
+            @ended="handleEnded"
+            @click="handleVideoClick"
           ></video>
 
-          <div class="video-interactive-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+          <!-- OVERLAY DE INTERAÇÃO -->
+          <div 
+            class="video-interactive-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+            :class="{ 'overlay-hidden': !showOverlay }"
+            @click="handleOverlayClick"
+          >
             <button 
-              @click="toggleVideoPlay" 
+              @click.stop="toggleVideoPlay" 
               class="stylish-play-btn shadow-lg d-flex align-items-center justify-content-center border-0"
               :aria-label="videoData.buttonAriaLabel"
             >
@@ -48,15 +55,27 @@
 </template>
 
 <script setup>
-import { useScrollVideo } from '@/shared/composables/useScrollVideo'
+import { useMoverVideo } from '../composables/useMoverVideo'
 import { useParallax } from '@/shared/composables/useParallax'
 
-// Toda a lógica de dados, scroll do vídeo e play/pause veio para cá:
-const { videoData, videoRef, isPlaying, toggleVideoPlay } = useScrollVideo()
+const { 
+  videoData, 
+  videoRef, 
+  isPlaying, 
+  showOverlay, 
+  toggleVideoPlay, 
+  handlePlay, 
+  handlePause, 
+  handleEnded,
+  handleVideoClick, 
+  handleOverlayClick 
+} = useMoverVideo()
+
 const { isVisible, elementRef } = useParallax(0.05)
 </script>
 
 <style scoped>
+/* Estilos visuais mantidos idênticos */
 .mover-video-section {
   background-color: transparent !important;
   width: 100%;
@@ -114,12 +133,19 @@ const { isVisible, elementRef } = useParallax(0.05)
   height: 100% !important;
   object-fit: cover !important;
   display: block;
+  cursor: pointer;
 }
 
 .video-interactive-overlay {
   background: rgba(11, 37, 69, 0.1);
-  transition: background 0.3s ease;
+  transition: opacity 0.3s ease, background 0.3s ease;
   cursor: pointer;
+  opacity: 1;
+}
+
+.video-interactive-overlay.overlay-hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .stylish-play-btn {
