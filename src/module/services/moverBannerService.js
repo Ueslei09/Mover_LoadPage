@@ -6,7 +6,7 @@ export const moverBannerService = {
       imageAlt: "Profissional sorrindo gerindo a empresa com controle",
       titleHighlight: "Gestão Empresarial",
       titleRest: "para crescer com controle.",
-      description: "Conecte finanças, fiscal, vendas, suprimentos e operações para decidir melhor, ganhar eficiência e acelerar resultados.",
+      description: "Conecte finanças, fiscal, vendas para decidir melhor, ganhar eficiência e acelerar resultados.",
       primaryButton: {
         text: "Quero uma demonstração",
         url: "#demonstracao",

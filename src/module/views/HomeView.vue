@@ -14,6 +14,10 @@
     </div>
     <MoverAbout />
 
+    <div id="blog">
+      <MoverBlog />
+    </div>
+
     <!--<MoverAbout />
     <MoverCuriosidades />
     
