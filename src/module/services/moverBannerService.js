@@ -4,8 +4,8 @@ export const moverBannerService = {
     return {
       bgImage: "/moverloadpager2_imagem.jpg",
       imageAlt: "Profissional sorrindo gerindo a empresa com controle",
-      titleHighlight: "Gestão Empresarial",
-      titleRest: "para crescer com controle.",
+      titleHighlight: "Soluções Integradas",
+      titleRest: "Para seu negócio crescer com controle.",
       description: "Conecte finanças, fiscal, vendas para decidir melhor, ganhar eficiência e acelerar resultados.",
       primaryButton: {
         text: "Quero uma demonstração",

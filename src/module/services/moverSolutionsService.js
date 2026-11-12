@@ -2,7 +2,7 @@
 export const moverSolutionsService = {
   getData() {
     return {
-      titlePrefix: 'Tudo o que move a gestão seu negócio.',
+      titlePrefix: 'Tudo o que move a Gestão do seu Negócio.',
       titleHighlight: ' Integrado e  Conectado.',
       subtitle: 'Explore as soluções e encontre a combinação certa para o seu negócio.',
       featuresTitle: 'Soluções',
@@ -19,7 +19,7 @@ export const moverSolutionsService = {
         {
           id: 2,
           title: 'Pedidos de Vendas',
-          icon: 'bi bi-gear-wide-connected',
+          icon: 'bi bi-cart-dash',
           description: 'O Módulo de Vendas foi desenvolvido para centralizar, agilizar e dar total controle sobre a operação comercial de ponta a ponta. Ele conecta o balcão, o e-commerce, a equipe de campo e o setor de faturamento em um ecossistema inteligente, eliminando gargalos e erros manuais.',
           features: ['Pedidos de Vendas', 'Faturamento', 'PDV', 'Documentos Fiscais'],
           mediaType: 'image',
