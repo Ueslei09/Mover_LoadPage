@@ -122,6 +122,7 @@ const { isVisible, elementRef } = useParallax(0.05)
 .mover-blog-section {
   background-color: transparent !important;
   width: 100%;
+  top: -30px !important;;
 }
 
 .banner-outer-container {

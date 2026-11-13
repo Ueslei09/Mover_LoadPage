@@ -82,6 +82,7 @@ const { isVisible, elementRef } = useParallax(0.05)
 .mover-video-section {
   background-color: transparent !important;
   width: 100%;
+  top: -30px !important;
 }
 
 .video-outer-container {
