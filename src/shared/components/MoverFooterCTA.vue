@@ -25,14 +25,14 @@
         <!-- CENTRO: Botões de Ação Ajustados para Mobile -->
         <div class="footer-actions d-flex flex-row align-items-center justify-content-center gap-2 gap-md-3 w-100">
           
-          <!-- Botão Falar com Especialista -->
-          <a 
-            :href="footerData.primaryCta.url" 
-            class="btn btn-especialista fw-semibold py-2 px-2 px-md-4 rounded-2 text-uppercase shadow-sm text-center text-nowrap"
+          <!-- Botão Falar com Especialista (Abre o seu MoverDemoModal) -->
+          <button 
+            @click="openModal"
+            class="btn btn-especialista fw-semibold py-2 px-2 px-md-4 rounded-2 text-uppercase shadow-sm text-center text-nowrap border-0"
             :aria-label="footerData.primaryCta.ariaLabel"
           >
             {{ footerData.primaryCta.text }}
-          </a>
+          </button>
 
           <!-- Botão WhatsApp com Animação no Ícone -->
           <a 
@@ -42,7 +42,6 @@
             class="btn btn-whatsapp fw-semibold py-2 px-2 px-md-4 rounded-2 text-white text-uppercase shadow-sm text-center d-flex align-items-center justify-content-center gap-1 gap-md-2 text-nowrap"
             :aria-label="footerData.whatsappCta.ariaLabel"
           >
-            <!-- Ícone com animação de pulsação -->
             <i :class="footerData.whatsappCta.icon" class="fs-6 fs-md-5 whatsapp-animated-icon"></i>
             <span>{{ footerData.whatsappCta.text }}</span>
           </a>
@@ -52,18 +51,39 @@
       </div>
     </div>
   </div>
+
+  <!-- SEU MODAL DE DEMONSTRAÇÃO / ESPECIALISTA -->
+  <MoverDemoModal 
+    :isOpen="isModalOpen"
+    :data="demoData"
+    :form="formState"
+    :close="closeModal"
+    :onSubmit="handleSubmit"
+  />
 </template>
 
 <script setup>
 import { useMoverFooter } from '@/shared/composables/useMoverFooter'
+import { useMoverDemoModal } from '@/shared/composables/useMoverDemoModal'
 import { useParallax } from '@/shared/composables/useParallax'
+import MoverDemoModal from '@/shared/components/MoverDemoModal.vue'
 
+// Dados e lógica do Footer
 const { footerData } = useMoverFooter()
 const { isVisible, elementRef } = useParallax(0.01)
+
+// Lógica e estado do seu Modal de Demonstração / Especialista
+const { 
+  isModalOpen, 
+  demoData, 
+  formState, 
+  openModal, 
+  closeModal, 
+  handleSubmit 
+} = useMoverDemoModal()
 </script>
 
 <style scoped>
-/* Fixa a barra na parte inferior da tela de ponta a ponta */
 .mover-footer-floating-wrapper {
   position: fixed !important;
   bottom: 0 !important;
@@ -73,7 +93,6 @@ const { isVisible, elementRef } = useParallax(0.01)
   z-index: 1050;
 }
 
-/* Card principal contínuo de ponta a ponta */
 .footer-card {
   pointer-events: auto;
   background-color: rgba(255, 255, 255, 0.96);
@@ -94,7 +113,6 @@ const { isVisible, elementRef } = useParallax(0.01)
   transform: translateY(0);
 }
 
-/* Badge/Ícone à esquerda */
 .logo-badge {
   width: 100px;
   height: 50px !important;
@@ -102,19 +120,18 @@ const { isVisible, elementRef } = useParallax(0.01)
   color: var(--mover-primary-blue, #0b2545);
 }
 
-/* Tamanho e estilo padrão dos botões */
 .btn-especialista,
 .btn-whatsapp {
   font-size: 0.85rem;
   letter-spacing: 0.2px;
 }
 
-/* Botão "Falar com especialista" */
 .btn-especialista {
   background-color: rgba(139, 195, 74, 0.2);
   color: var(--mover-primary-blue, #0b2545) !important;
   border: 1px solid var(--mover-light-green, #8bc34a);
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .btn-especialista:hover,
@@ -124,7 +141,6 @@ const { isVisible, elementRef } = useParallax(0.01)
   transform: translateY(-2px);
 }
 
-/* Botão WhatsApp */
 .btn-whatsapp {
   background-color: #25d366 !important;
   border: none;
@@ -140,7 +156,6 @@ const { isVisible, elementRef } = useParallax(0.01)
   box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3) !important;
 }
 
-/* ANIMAÇÃO DO ÍCONE DO WHATSAPP */
 @keyframes whatsappPulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.15); }
@@ -152,28 +167,21 @@ const { isVisible, elementRef } = useParallax(0.01)
   animation: whatsappPulse 1.8s infinite ease-in-out;
 }
 
-/* RESPONSIVIDADE MOBILE (Ajuste fino para telas pequenas como 360px) */
 @media (max-width: 576px) {
   .footer-card {
-    padding-top: 0.4rem !important;
-    padding-bottom: 0.4rem !important;
-    padding-left: 0.4rem !important;
-    padding-right: 0.4rem !important;
+    padding: 0.4rem !important;
   }
   
   .footer-actions {
-    gap: 0.35rem !important; /* Reduz o espaço entre os botões para caber perfeitamente */
+    gap: 0.35rem !important;
   }
 
   .btn-especialista,
   .btn-whatsapp {
-    font-size: 0.64rem !important; /* Fonte proporcional para não quebrar em telas de 360px */
-    padding-left: 0.3rem !important;
-    padding-right: 0.3rem !important;
-    padding-top: 0.45rem !important;
-    padding-bottom: 0.45rem !important;
-    flex: 1; /* Divide o espaço de forma igual e fluida */
-    letter-spacing: -0.2px; /* Economiza largura horizontal */
+    font-size: 0.64rem !important;
+    padding: 0.45rem 0.3rem !important;
+    flex: 1;
+    letter-spacing: -0.2px;
   }
 }
 </style>

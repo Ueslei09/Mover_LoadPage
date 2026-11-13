@@ -11,11 +11,14 @@
     </div>
   
     <MoverVideoApresentation />
-    
-    <!-- Demais seções... -->
+
+    <div id="solucoes">
+      <MoverSectorsCarousel />
+    </div>
+    <!-- Demais seções... 
     <div id="solucoes">
       <MoverSolutions />
-    </div>
+    </div>-->
     <MoverAbout />
 
     <div id="blog">
@@ -56,4 +59,5 @@ import MoverProvaSocial from '../components/MoverProvaSocial.vue'
 import MoverFAQ from '../components/MoverFAQ.vue'
 import MoverCopyright from '../components/MoverCopyright.vue'
 import MoverVideoApresentation from '../components/MoverVideoApresentation.vue'
+import MoverSectorsCarousel from '../components/MoverSectorsCarousel.vue'
 </script>

@@ -24,9 +24,12 @@
           <video 
             ref="videoRef"
             :src="videoData.videoUrl"
+            :poster="videoData.posterUrl"
             class="presentation-video w-100 h-100"
             controls
             playsinline
+            webkit-playsinline
+            preload="metadata"
             @play="handlePlay"
             @pause="handlePause"
             @ended="handleEnded"
@@ -75,7 +78,6 @@ const { isVisible, elementRef } = useParallax(0.05)
 </script>
 
 <style scoped>
-/* Estilos visuais mantidos idênticos */
 .mover-video-section {
   background-color: transparent !important;
   width: 100%;
@@ -134,6 +136,13 @@ const { isVisible, elementRef } = useParallax(0.05)
   object-fit: cover !important;
   display: block;
   cursor: pointer;
+  background-color: #0b2545;
+}
+
+/* Oculta os botões de reprodução nativos indesejados em alguns webkits mobile */
+.presentation-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none;
 }
 
 .video-interactive-overlay {
@@ -145,7 +154,7 @@ const { isVisible, elementRef } = useParallax(0.05)
 
 .video-interactive-overlay.overlay-hidden {
   opacity: 0;
-  pointer-events: none;
+  pointer-events: none; /* Garante que o usuário consiga interagir com os controles nativos quando o vídeo estiver rodando */
 }
 
 .stylish-play-btn {

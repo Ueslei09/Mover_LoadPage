@@ -64,9 +64,10 @@
                     <!-- Se for Vídeo -->
                     <video 
                       v-if="slide.type === 'video'"
-                      autoplay 
-                     
-                      controls
+                     :ref="(el) => { if (currentSlide === index) setVideoRef(el) }"
+                        muted
+                        loop
+                        controls
                       playsinline 
                       class="slide-media"
                     >
@@ -112,14 +113,14 @@ import { useMpro } from '../composables/useMoverAbout.js'
 import { useParallax } from '@/shared/composables/useParallax'
 
 
-const { mproData, currentSlide, handleActionClick } = useMpro()
+const { mproData, currentSlide, setVideoRef, handleActionClick } = useMpro()
 const { isVisible, elementRef } = useParallax(0.05)
 </script>
 
 <style scoped>
 .mpro-hero-section {
   background-color: transparent !important;
-  top: -90px !important;
+  top: -30px !important;
   width: 100%;
 }
 
@@ -329,6 +330,7 @@ const { isVisible, elementRef } = useParallax(0.05)
   .carousel-container-wrapper {
     min-height: 280px;
     margin-top: 1.5rem;
+    top: -70px !important;
   }
 }
 </style>
