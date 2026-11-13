@@ -3,8 +3,8 @@ export const moverSectorsService = {
   getData() {
     return {
       titlePrefix: "Soluções que ",
-      titleHighlight: "entende a realidade",
-      titleSuffix: " da sua operação",
+      titleHighlight: "entendem a realidade ",
+      titleSuffix: " da sua operação.",
       subtitle: "Explore as soluções e encontre a combinação certa para o seu negócio.",
       sectors: [
         {

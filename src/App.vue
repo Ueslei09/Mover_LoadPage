@@ -9,6 +9,8 @@
     <transition name="fade" mode="out-in">
     <component :is="Component" />
   </transition>
+
+  <ScrollToTop />
   <!-- Banner de Cookies Discreto -->
   <CookieBanner />
   </div>
@@ -18,6 +20,7 @@
 import InitialLoader from '@/shared/components/InitialLoader.vue'
 import { useInitialLoader } from '@/shared/composables/useInitialLoader'
 import CookieBanner from '@/shared/components/CookieBanner.vue';
+import ScrollToTop from '@/shared/components/ScrollToTop.vue';
 
 const { isLoading } = useInitialLoader()
 </script>

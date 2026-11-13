@@ -7,7 +7,7 @@ export const mproService = {
       
       subTitlePart1: "Descubra como a ",
       highlightWord: "Mover Sistemas",
-      subTitlePart2: " transforma a gestão da sua  empresa",
+      subTitlePart2: " transforma a gestão da sua  empresa.",
       
       description: "A Mover Sistemas tem como principal objetivo transformar e simplificar a gestão empresarial através de tecnologia de ponta, inteligência e eficiência operacional.",
       

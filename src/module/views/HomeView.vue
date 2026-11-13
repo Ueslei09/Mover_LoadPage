@@ -25,6 +25,7 @@
       <MoverBlog />
     </div>
 
+
     <!--<MoverAbout />
     <MoverCuriosidades />
     
@@ -38,6 +39,7 @@
     
      Footer CTA específico da Home-->
     <MoverFooterCTA />
+
     
     <MoverCopyright />
   </div>
@@ -47,6 +49,7 @@
 // Importações da Navbar e do Rodapé que foram trazidas do App.vue
 import MoverNavbar from '@/shared/components/MoverNavbar.vue'
 import MoverFooterCTA from '@/shared/components/MoverFooterCTA.vue'
+
 
 // Importações dos componentes da Home
 import MoverBanner from '../components/MoverBanner.vue'
