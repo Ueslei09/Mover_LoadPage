@@ -251,5 +251,8 @@ const { isVisible, elementRef } = useParallax(0.05)
   .blog-media-container {
     height: 220px;
   }
+  .mover-blog-section{
+    top: -40px !important;;
+  } 
 }
 </style>
