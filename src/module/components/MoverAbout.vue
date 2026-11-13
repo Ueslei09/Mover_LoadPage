@@ -330,7 +330,7 @@ const { isVisible, elementRef } = useParallax(0.05)
   .carousel-container-wrapper {
     min-height: 280px;
     margin-top: 1.5rem;
-    top: -70px !important;
+    top: -60px !important;
   }
 }
 </style>
