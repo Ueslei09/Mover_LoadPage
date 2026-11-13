@@ -20,6 +20,7 @@
           </p>
         </div>
 
+        <!-- CONTAINER DO VÍDEO COM ISOLAMENTO ABSOLUTO PARA O BOTÃO -->
         <div class="video-container-fluid position-relative w-100 flex-grow-1">
           <video 
             ref="videoRef"
@@ -36,7 +37,7 @@
             @click="handleVideoClick"
           ></video>
 
-          <!-- OVERLAY DE INTERAÇÃO -->
+          <!-- OVERLAY COM POSICIONAMENTO ABSOLUTO ESTrito -->
           <div 
             class="video-interactive-overlay"
             :class="{ 'overlay-hidden': !showOverlay }"
@@ -139,57 +140,62 @@ const { isVisible, elementRef } = useParallax(0.05)
   background-color: #0b2545;
 }
 
-/* Oculta os botões de reprodução nativos indesejados em webkits mobile */
+/* Oculta os controlos nativos iniciais indesejados */
 .presentation-video::-webkit-media-controls-start-playback-button {
   display: none !important;
   -webkit-appearance: none;
 }
 
-/* Overlay fixo e sempre centralizado corretamente */
+/* OVERLAY ABSOLUTO CENTRALIZADO */
 .video-interactive-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(11, 37, 69, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(11, 37, 69, 0.3);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   transition: opacity 0.3s ease, background 0.3s ease;
   cursor: pointer;
   opacity: 1;
-  z-index: 5;
+  z-index: 10;
 }
 
 .video-interactive-overlay.overlay-hidden {
-  opacity: 0;
-  pointer-events: none; /* Permite interagir com os controles nativos do vídeo quando reproduz */
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
+/* BOTÃO DE PLAY PERFEITAMENTE REDONDO E CENTRADO */
 .stylish-play-btn {
-  width: 84px;
-  height: 84px;
-  min-width: 84px;
-  min-height: 84px;
+  width: 84px !important;
+  height: 84px !important;
+  min-width: 84px !important;
+  min-height: 84px !important;
+  max-width: 84px !important;
+  max-height: 84px !important;
   border-radius: 50% !important;
-  background-color: #8bc34a;
-  color: #0b2545;
-  font-size: 2.5rem;
+  background-color: #8bc34a !important;
+  color: #0b2545 !important;
+  font-size: 2.5rem !important;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 10px 30px rgba(139, 195, 74, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-left: 6px; /* Ajuste visual para centrar o ícone do play */
-  border: none;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  padding-left: 6px !important; /* Ajuste visual do ícone */
+  border: none !important;
+  flex-shrink: 0;
 }
 
 .stylish-play-btn:hover {
   transform: scale(1.15);
-  background-color: #ffffff;
-  color: #0b2545;
+  background-color: #ffffff !important;
+  color: #0b2545 !important;
   box-shadow: 0 15px 40px rgba(255, 255, 255, 0.4);
 }
 
@@ -202,11 +208,13 @@ const { isVisible, elementRef } = useParallax(0.05)
     min-height: 280px;
   }
   .stylish-play-btn {
-    width: 64px;
-    height: 64px;
-    min-width: 64px;
-    min-height: 64px;
-    font-size: 2rem;
+    width: 68px !important;
+    height: 68px !important;
+    min-width: 68px !important;
+    min-height: 68px !important;
+    max-width: 68px !important;
+    max-height: 68px !important;
+    font-size: 2rem !important;
   }
 }
 </style>
