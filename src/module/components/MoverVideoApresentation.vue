@@ -216,5 +216,8 @@ const { isVisible, elementRef } = useParallax(0.05)
     max-height: 68px !important;
     font-size: 2rem !important;
   }
+  .video-interactive-overlay {
+    display: none !important;
+  }
 }
 </style>
