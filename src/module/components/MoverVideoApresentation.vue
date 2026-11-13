@@ -38,13 +38,13 @@
 
           <!-- OVERLAY DE INTERAÇÃO -->
           <div 
-            class="video-interactive-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+            class="video-interactive-overlay"
             :class="{ 'overlay-hidden': !showOverlay }"
             @click="handleOverlayClick"
           >
             <button 
               @click.stop="toggleVideoPlay" 
-              class="stylish-play-btn shadow-lg d-flex align-items-center justify-content-center border-0"
+              class="stylish-play-btn shadow-lg border-0"
               :aria-label="videoData.buttonAriaLabel"
             >
               <i :class="isPlaying ? 'bi bi-pause-fill' : 'bi bi-play-fill'"></i>
@@ -139,37 +139,40 @@ const { isVisible, elementRef } = useParallax(0.05)
   background-color: #0b2545;
 }
 
-/* Oculta os botões de reprodução nativos indesejados em alguns webkits mobile */
+/* Oculta os botões de reprodução nativos indesejados em webkits mobile */
 .presentation-video::-webkit-media-controls-start-playback-button {
   display: none !important;
   -webkit-appearance: none;
 }
 
+/* Overlay fixo e sempre centralizado corretamente */
 .video-interactive-overlay {
-  background: rgba(11, 37, 69, 0.1);
-  transition: opacity 0.3s ease, background 0.3s ease;
-  cursor: pointer;
-  opacity: 1;
-}
-
-.video-interactive-overlay.overlay-hidden {
-  opacity: 0;
-  pointer-events: none; /* Garante que o usuário consiga interagir com os controles nativos quando o vídeo estiver rodando */
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background: rgba(11, 37, 69, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: opacity 0.3s ease, background 0.3s ease;
+  cursor: pointer;
+  opacity: 1;
+  z-index: 5;
+}
+
+.video-interactive-overlay.overlay-hidden {
+  opacity: 0;
+  pointer-events: none; /* Permite interagir com os controles nativos do vídeo quando reproduz */
 }
 
 .stylish-play-btn {
   width: 84px;
   height: 84px;
   min-width: 84px;
-  border-radius: 50%;
+  min-height: 84px;
+  border-radius: 50% !important;
   background-color: #8bc34a;
   color: #0b2545;
   font-size: 2.5rem;
@@ -179,8 +182,8 @@ const { isVisible, elementRef } = useParallax(0.05)
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-left: 6px;
-  margin: auto;
+  padding-left: 6px; /* Ajuste visual para centrar o ícone do play */
+  border: none;
 }
 
 .stylish-play-btn:hover {
@@ -201,6 +204,8 @@ const { isVisible, elementRef } = useParallax(0.05)
   .stylish-play-btn {
     width: 64px;
     height: 64px;
+    min-width: 64px;
+    min-height: 64px;
     font-size: 2rem;
   }
 }
