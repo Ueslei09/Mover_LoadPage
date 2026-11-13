@@ -155,11 +155,20 @@ const { isVisible, elementRef } = useParallax(0.05)
 .video-interactive-overlay.overlay-hidden {
   opacity: 0;
   pointer-events: none; /* Garante que o usuário consiga interagir com os controles nativos quando o vídeo estiver rodando */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .stylish-play-btn {
   width: 84px;
   height: 84px;
+  min-width: 84px;
   border-radius: 50%;
   background-color: #8bc34a;
   color: #0b2545;
@@ -171,6 +180,7 @@ const { isVisible, elementRef } = useParallax(0.05)
   align-items: center;
   justify-content: center;
   padding-left: 6px;
+  margin: auto;
 }
 
 .stylish-play-btn:hover {
