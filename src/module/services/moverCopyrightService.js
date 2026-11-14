@@ -22,8 +22,14 @@ export const moverCopyrightService = {
         },
         {
           name: 'X (Twitter)',
-          url: 'https://x.com/seuperfil',
+          url: 'https://x.com/moversistemas',
           icon: 'bi bi-twitter-x', // Ou bi-twitter
+          ariaLabel: 'Visite nosso perfil no X'
+        },
+        {
+          name: 'linkedin',
+          url: 'https://www.linkedin.com/in/mover-sistemas-91b4b944b/',
+          icon: 'bi bi-linkedin', // Ou bi-twitter
           ariaLabel: 'Visite nosso perfil no X'
         }
       ]

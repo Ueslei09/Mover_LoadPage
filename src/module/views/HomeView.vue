@@ -26,6 +26,9 @@
     </div>
 
 
+      <ScrollToTop />
+
+
     <!--<MoverAbout />
     <MoverCuriosidades />
     
@@ -63,4 +66,5 @@ import MoverFAQ from '../components/MoverFAQ.vue'
 import MoverCopyright from '../components/MoverCopyright.vue'
 import MoverVideoApresentation from '../components/MoverVideoApresentation.vue'
 import MoverSectorsCarousel from '../components/MoverSectorsCarousel.vue'
+import ScrollToTop from '../components/ScrollToTop.vue';
 </script>

@@ -10,7 +10,7 @@
     <!-- Container externo responsivo -->
     <div class="banner-outer-container px-3 px-md-4 py-3">
       
-      <!-- Wrapper com background #0b2545, cantos arredondados e sombra à direita/bottom -->
+      <!-- Wrapper com background #0b2545, cantos arredondados e sombra -->
       <div class="blog-wrapper position-relative overflow-hidden py-5 px-3 px-md-5">
         
         <!-- Cabeçalho da Seção -->
@@ -29,76 +29,100 @@
         <!-- CONTEÚDO DA SEÇÃO -->
         <div class="container-fluid px-0 px-md-4 z-2 position-relative">
           
-          <!-- SKELETON LOADERS (Enquanto isLoading for true) -->
+          <!-- SKELETON LOADERS -->
           <div v-if="isLoading" class="row g-4 justify-content-center">
-            <div v-for="n in 2" :key="n" class="col-12 col-lg-6 d-flex">
+            <div v-for="n in 3" :key="n" class="col-12 col-lg-4 d-flex">
               <SkeletonLoader />
             </div>
           </div>
 
-          <!-- GRADE DE CARDS REAIS (Quando os dados estiverem prontos) -->
-          <div v-else class="row g-4 justify-content-center">
+          <!-- CARROSSEL NO MOBILE / GRELHA DE 3 COLUNAS NO DESKTOP -->
+          <div 
+            v-else 
+            class="blog-carousel-viewport overflow-hidden position-relative w-100"
+            @touchstart="handleTouchStart"
+            @touchmove="handleTouchMove"
+            @touchend="handleTouchEnd"
+          >
             <div 
-              v-for="post in blogData?.posts" 
-              :key="post.id"
-              class="col-12 col-lg-6 d-flex"
+              class="blog-carousel-track d-flex"
+              :style="{ transform: `translateX(-${currentMobileIndex * 100}%)` }"
             >
-              <!-- Card Principal com transição ao clicar -->
               <div 
-                class="blog-card w-100 bg-white rounded-4 overflow-hidden shadow-sm d-flex flex-column cursor-pointer"
-                @click="navigateToPost(post.route)"
+                v-for="post in blogData?.posts" 
+                :key="post.id"
+                class="col-12 col-lg-4 d-flex blog-slide-item flex-shrink-0"
               >
-                
-                <!-- 60% Altura: Mídia (Imagem ou Vídeo) com Botão em Gradiente -->
-                <div class="blog-media-container position-relative">
-                  <template v-if="post.mediaType === 'video'">
-                    <video 
-                      :src="post.mediaUrl"
-                      class="w-100 h-100 object-fit-cover"
-                      autoplay 
-                      muted 
-                      loop 
-                      playsinline
-                    ></video>
-                  </template>
-                  <template v-else>
-                    <img 
-                      :src="post.mediaUrl" 
-                      :alt="post.title"
-                      class="w-100 h-100 object-fit-cover"
-                      loading="lazy"
-                    />
-                  </template>
+                <!-- Card Principal -->
+                <div 
+                  class="blog-card w-100 bg-white rounded-4 overflow-hidden shadow-sm d-flex flex-column cursor-pointer"
+                  @click="navigateToPost(post.route)"
+                >
+                  
+                  <!-- Mídia (Imagem ou Vídeo) -->
+                  <div class="blog-media-container position-relative">
+                    <template v-if="post.mediaType === 'video'">
+                      <video 
+                        :src="post.mediaUrl"
+                        class="w-100 h-100 object-fit-cover"
+                        autoplay 
+                        muted 
+                        loop 
+                        playsinline
+                      ></video>
+                    </template>
+                    <template v-else>
+                      <img 
+                        :src="post.mediaUrl" 
+                        :alt="post.title"
+                        class="w-100 h-100 object-fit-cover"
+                        loading="lazy"
+                      />
+                    </template>
 
-                  <!-- Overlay com Gradiente e Botão -->
-                  <div class="media-gradient-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-end p-3">
-                    <router-link 
-                      :to="post.route" 
-                      class="blog-action-btn fw-semibold px-4 py-2 rounded-pill text-white shadow-sm text-decoration-none d-inline-block"
-                      @click.stop
-                    >
-                      {{ post.buttonText }} <i class="bi bi-arrow-right ms-1"></i>
-                    </router-link>
+                    <!-- Overlay com Gradiente e Botão -->
+                    <div class="media-gradient-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-end p-3">
+                      <router-link 
+                        :to="post.route" 
+                        class="blog-action-btn fw-semibold px-4 py-2 rounded-pill text-white shadow-sm text-decoration-none d-inline-block"
+                        @click.stop
+                      >
+                        {{ post.buttonText }} <i class="bi bi-arrow-right ms-1"></i>
+                      </router-link>
+                    </div>
                   </div>
-                </div>
 
-                <!-- 40% Altura: Descrição e Conteúdo (Cor #0b2545) -->
-                <div class="blog-content-container p-4 d-flex flex-column justify-content-between flex-grow-1">
-                  <div>
-                    <span class="blog-post-date d-block mb-2 fw-semibold">
-                      {{ post.date }}
-                    </span>
-                    <h3 class="blog-post-title fw-bold mb-2">
-                      {{ post.title }}
-                    </h3>
-                    <p class="blog-post-desc mb-0 lh-base text-muted">
-                      {{ post.description }}
-                    </p>
+                  <!-- Conteúdo -->
+                  <div class="blog-content-container p-4 d-flex flex-column justify-content-between flex-grow-1">
+                    <div>
+                      <span class="blog-post-date d-block mb-2 fw-semibold">
+                        {{ post.date }}
+                      </span>
+                      <h3 class="blog-post-title fw-bold mb-2">
+                        {{ post.title }}
+                      </h3>
+                      <p class="blog-post-desc mb-0 lh-base text-muted">
+                        {{ post.description }}
+                      </p>
+                    </div>
                   </div>
-                </div>
 
+                </div>
               </div>
             </div>
+
+            <!-- Dots (Indicadores visuais para mobile) -->
+            <div class="d-flex justify-content-center gap-2 mt-4 d-lg-none">
+              <button 
+                v-for="(_, index) in blogData?.posts.length" 
+                :key="'blog-dot-' + index"
+                @click="currentMobileIndex = index"
+                class="blog-dot-btn border-0"
+                :class="{ 'active': currentMobileIndex === index }"
+                aria-label="Ir para o post"
+              ></button>
+            </div>
+
           </div>
 
         </div>
@@ -114,7 +138,16 @@ import { useMoverBlog } from '../composables/useMoverBlog'
 import { useParallax } from '@/shared/composables/useParallax'
 import SkeletonLoader from '@/shared/components/SkeletonLoader.vue'
 
-const { blogData, isLoading, navigateToPost } = useMoverBlog()
+const { 
+  blogData, 
+  isLoading, 
+  currentMobileIndex, 
+  navigateToPost, 
+  handleTouchStart, 
+  handleTouchMove, 
+  handleTouchEnd 
+} = useMoverBlog()
+
 const { isVisible, elementRef } = useParallax(0.05)
 </script>
 
@@ -122,7 +155,7 @@ const { isVisible, elementRef } = useParallax(0.05)
 .mover-blog-section {
   background-color: transparent !important;
   width: 100%;
-  top: -30px !important;;
+  top: -30px !important;
 }
 
 .banner-outer-container {
@@ -131,7 +164,6 @@ const { isVisible, elementRef } = useParallax(0.05)
   margin: 0 auto;
 }
 
-/* Wrapper Principal: Background #0b2545, Cantos Arredondados e Sombra à Direita/Bottom */
 .blog-wrapper {
   position: relative;
   background-color: #0b2545 !important;
@@ -176,6 +208,53 @@ const { isVisible, elementRef } = useParallax(0.05)
   margin-bottom: 3rem !important;
 }
 
+/* Comportamento do Carrossel no Mobile / Grelha no Desktop */
+.blog-carousel-viewport {
+  width: 100%;
+  touch-action: pan-y;
+}
+
+.blog-carousel-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  gap: 0;
+}
+
+.blog-slide-item {
+  width: 100%;
+}
+
+/* Desktop: 3 colunas por linha (col-lg-4) com espaçamento limpo */
+@media (min-width: 992px) {
+  .blog-carousel-track {
+    transform: none !important; 
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 2rem; /* Espaçamento exato entre os cards */
+  }
+  
+  .blog-slide-item {
+    flex: 0 0 calc(33.333% - 1.34rem); /* Divide em 3 colunas descontando o gap */
+    max-width: calc(33.333% - 1.34rem);
+  }
+}
+
+/* Indicadores (Dots) do carrossel mobile */
+.blog-dot-btn {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.blog-dot-btn.active {
+  background-color: #8bc34a;
+  width: 24px;
+  border-radius: 5px;
+}
+
 /* Estilização do Card */
 .blog-card {
   border: none;
@@ -188,14 +267,12 @@ const { isVisible, elementRef } = useParallax(0.05)
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* 60% Mídia */
 .blog-media-container {
   height: 280px;
   position: relative;
   overflow: hidden;
 }
 
-/* Gradiente no botão da imagem */
 .media-gradient-overlay {
   background: linear-gradient(to top, rgba(11, 37, 69, 0.75) 0%, rgba(0, 0, 0, 0) 60%);
   display: flex;
@@ -214,7 +291,6 @@ const { isVisible, elementRef } = useParallax(0.05)
   transform: scale(1.05);
 }
 
-/* 40% Conteúdo com texto na cor #0b2545 */
 .blog-content-container {
   background-color: #ffffff;
 }
@@ -241,7 +317,6 @@ const { isVisible, elementRef } = useParallax(0.05)
   text-overflow: ellipsis;
 }
 
-/* Responsividade Mobile */
 @media (max-width: 992px) {
   .blog-wrapper {
     border-radius: 16px !important;
@@ -252,7 +327,7 @@ const { isVisible, elementRef } = useParallax(0.05)
     height: 220px;
   }
   .mover-blog-section{
-    top: -40px !important;;
+    top: -40px !important;
   } 
 }
 </style>
