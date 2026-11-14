@@ -10,6 +10,7 @@ export const moverSectorsService = {
         {
           id: 1,
           title: "Cadastros",
+          icon: "bi bi-folder-fill",
           description: "O Módulo de Cadastros é a base estrutural de todo o sistema, projetado para garantir agilidade no preenchimento, confiabilidade das informações e centralização de dados essenciais para as rotinas fiscais, comerciais e financeiras.",
           image: "/moversolucoes7_imagem.jpg",
           imageAlt: "Operação industrial Mover",
@@ -18,22 +19,25 @@ export const moverSectorsService = {
         {
           id: 2,
           title: "Compras",
+          icon: "bi bi-cart-fill",
           description: "O Módulo de Compras foi projetado para transformar o setor de suprimentos em um centro estratégico de economia e eficiência. Ele automatiza desde a identificação da necessidade de reposição até o recebimento e o lançamento fiscal das mercadorias.",
           image: "/moversolucoes8.jpg",
           imageAlt: "Agronegócio Mover",
-          footerCaption: "Pedidos de Compras, Importar XML e Documentos Fiscais. O Módulo de Compras projetado para agilizar suas decisões de compras.   "
+          footerCaption: "Pedidos de Compras, Importar XML e Documentos Fiscais. O Módulo de Compras projetado para agilizar suas decisões de compras."
         },
         {
           id: 3,
           title: "Financeiro",
+          icon: "bi bi-wallet2",
           description: "O Módulo Financeiro é o coração administrativo da empresa, projetado para garantir saúde de caixa, previsibilidade e controle absoluto sobre todas as entradas e saídas financeiras de forma automatizada e segura.",
           image: "/moversolucoes2_imagem.jpg",
           imageAlt: "Construção civil Mover",
-          footerCaption: "Contas a Receber, Contas a Pagar e Fluxo de Caixa.O Módulo Financeiro controle absoluto sobre todas as entradas e saídas financeiras de forma automatizada e segura. "
+          footerCaption: "Contas a Receber, Contas a Pagar e Fluxo de Caixa.O Módulo Financeiro controle absoluto sobre todas as entradas e saídas financeiras de forma automatizada e segura."
         },
         {
           id: 4,
           title: "Movimentações",
+          icon: "bi bi-arrow-left-right",
           description: "O Módulo de Movimentações integra de ponta a ponta a cadeia de suprimentos e a saída de mercadorias, transformando o fluxo operacional em um processo unificado, inteligente e livre de redigitação.",
           image: "/moversolucoes5_imagem.jpg",
           imageAlt: "Logística Mover",
@@ -42,10 +46,11 @@ export const moverSectorsService = {
         {
           id: 5,
           title: "Pedidos de Vendas",
+          icon: "bi bi-bag-check-fill",
           description: "O Módulo de Vendas foi desenvolvido para centralizar, agilizar e dar total controle sobre a operação comercial de ponta a ponta. Ele conecta o balcão, o e-commerce, a equipe de campo e o setor de faturamento em um ecossistema inteligente, eliminando gargalos e erros manuais.",
           image: "/moversolucoes1_imagem.png",
           imageAlt: "Varejo Mover",
-          footerCaption: "Pedidos de Vendas, Faturamento, PDV e Faturamentos. Ele conecta o balcão, o e-commerce, a equipe de campo e o setor de faturamento. "
+          footerCaption: "Pedidos de Vendas, Faturamento e PDV. Ele conecta o balcão, o e-commerce, a equipe de campo e o setor de faturamento."
         }
       ]
     }

@@ -24,8 +24,13 @@
       <!-- CONTAINER DO CARROSSEL (COM O AZUL PADRÃO DO PROJETO) -->
       <div class="sectors-card-wrapper position-relative overflow-hidden d-flex flex-column p-4 p-md-5">
         
-        <!-- PISTA DO CARROSSEL DESLIZANTE -->
-        <div class="sectors-carousel-viewport overflow-hidden position-relative w-100">
+        <!-- PISTA DO CARROSSEL COM SUPORTE A SWIPE TÁTIL -->
+        <div 
+          class="sectors-carousel-viewport overflow-hidden position-relative w-100"
+          @touchstart="handleTouchStart"
+          @touchmove="handleTouchMove"
+          @touchend="handleTouchEnd"
+        >
           <div 
             class="sectors-carousel-track d-flex transition-transform"
             :style="{ transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)` }"
@@ -39,10 +44,13 @@
                 class="sector-card position-relative overflow-hidden rounded-4 shadow-lg h-100"
                 :class="{ 'is-expanded': expandedCardId === sector.id }"
               >
-                <!-- CONTEÚDO NORMAL (CARD VERDE) -->
+                <!-- CONTEÚDO NORMAL (CARD VERDE COM ÍCONE) -->
                 <div class="card-content-front p-4 d-flex flex-column justify-content-between h-100">
                   <div>
-                    <h3 class="fw-bold text-dark-blue mb-3">{{ sector.title }}</h3>
+                    <h3 class="fw-bold text-dark-blue mb-3 d-flex align-items-center gap-2">
+                      <i :class="sector.icon" class="fs-4"></i>
+                      <span>{{ sector.title }}</span>
+                    </h3>
                     <p class="text-dark-blue-50 mb-0">{{ sector.description }}</p>
                   </div>
 
@@ -63,15 +71,12 @@
                 >
                   <img :src="sector.image" :alt="sector.imageAlt" class="w-100 h-100 object-fit-cover" />
                   
-                  <!-- CAMADA DE OVERLAY AZUL TRANSPARENTE -->
                   <div class="card-overlay-tint position-absolute top-0 start-0 w-100 h-100"></div>
 
-                  <!-- Descrição no Rodapé da Imagem -->
                   <div class="image-footer-caption position-absolute bottom-0 start-0 w-100 p-3 text-white z-2">
                     <p class="mb-0 small fw-medium">{{ sector.footerCaption }}</p>
                   </div>
 
-                  <!-- Botão para fechar/recolher -->
                   <button 
                     @click.stop="toggleExpand(sector.id)"
                     class="close-btn position-absolute top-0 end-0 m-3 border-0 d-flex align-items-center justify-content-center shadow-sm rounded-circle z-2"
@@ -127,7 +132,10 @@ const {
   nextSlide, 
   prevSlide, 
   selectSlide, 
-  toggleExpand 
+  toggleExpand,
+  handleTouchStart,
+  handleTouchMove,
+  handleTouchEnd
 } = useMoverSectors()
 
 const { isVisible, elementRef } = useParallax(0.05)
@@ -137,7 +145,6 @@ const { isVisible, elementRef } = useParallax(0.05)
 .mover-sectors-section {
   background-color: transparent !important;
   width: 100%;
-  top: -30px !important;;
 }
 
 .sectors-outer-container {
@@ -187,11 +194,12 @@ const { isVisible, elementRef } = useParallax(0.05)
 
 .sectors-carousel-viewport {
   width: 100%;
+  touch-action: pan-y; /* Permite scroll vertical da página mas captura o gesto horizontal no carrossel */
 }
 
 .sectors-carousel-track {
   display: flex;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .sector-slide-item {
@@ -254,7 +262,6 @@ const { isVisible, elementRef } = useParallax(0.05)
   visibility: visible;
 }
 
-/* OVERLAY AZUL TRANSPARENTE SOBRE A IMAGEM (#0b2545 com opacidade de 45%) */
 .card-overlay-tint {
   background-color: rgba(11, 37, 69, 0.45);
   pointer-events: none;

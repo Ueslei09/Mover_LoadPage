@@ -18,8 +18,8 @@ export const mproService = {
       // Array com os 6 slides (suporta 'video' ou 'image')
       slides: [
         { type: 'video', src: '/MOVEVIDEOPRINCIPAL2.mp4', alt: 'Demonstração Mpro 1' },
-        { type: 'image', src: '/moverbout1_imagem.jpg', alt: 'Demonstração Mpro 2' },
-        { type: 'image', src: '/moverabout2_imagem.jpg', alt: 'Demonstração Mpro 3' },
+        { type: 'video', src: '/moverabout_video.mp4', alt: 'Demonstração Mpro 2' },
+        { type: 'video', src: '/moverabout_video2.mp4', alt: 'Demonstração Mpro 3' },
         { type: 'image', src: '/moverabut3_image.jpg', alt: 'Demonstração Mpro 4' },
         { type: 'image', src: '/moverabout4_imagem.jpg', alt: 'Demonstração Mpro 5' },
         { type: 'image', src: '/moverabout5_imagem.jpg', alt: 'Demonstração Mpro 6' }
