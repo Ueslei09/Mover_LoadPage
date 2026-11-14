@@ -28,6 +28,7 @@
             :poster="videoData.posterUrl"
             class="presentation-video w-100 h-100"
             autoplay
+          
             controls
             playsinline
             webkit-playsinline

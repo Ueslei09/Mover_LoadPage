@@ -10,8 +10,7 @@
               <span class="word">Mover</span>
               <span class="word">Sistemas</span>
               <span class="word">soluções</span>
-              <span class="word">mover</span>
-              <span class="word">sistemas</span>
+              
             </div>
           </div>
         </div>

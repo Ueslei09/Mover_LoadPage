@@ -10,7 +10,7 @@ export function useMpro() {
   let observer = null
 
   const scheduleNextSlide = () => {
-    const delay = currentSlide.value === 0 ? 15000 : 5000
+    const delay = currentSlide.value === 0 ? 20000 : 10000
     if (slideTimeout) clearTimeout(slideTimeout)
 
     slideTimeout = setTimeout(() => {
