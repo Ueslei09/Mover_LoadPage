@@ -1,99 +1,73 @@
-// src/modules/mover/composables/useMoverSectors.js
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { moverSectorsService } from '../services/moverSectorsService.js'
+// src/modules/mpro/composables/useMpro.js
+import { ref, onMounted, onUnmounted } from 'vue'
+import { mproService } from '../services/MoverAboutService.js'
 
-export function useMoverSectors() {
-  const sectorsData = ref(moverSectorsService.getData())
-  const currentIndex = ref(0)
-  const expandedCardId = ref(null)
-  const windowWidth = ref(typeof window !== 'undefined' ? window.innerWidth : 1200)
+export function useMpro() {
+  const mproData = ref(mproService.getHeroData())
+  const currentSlide = ref(0)
+  const activeVideoRef = ref(null) // Referência para o vídeo atual
+  let slideTimeout = null
+  let observer = null
 
-  // Variáveis para controlar o Swipe no Mobile
-  const touchStartX = ref(0)
-  const touchEndX = ref(0)
+  const scheduleNextSlide = () => {
+    const delay = currentSlide.value === 0 ? 15000 : 5000
+    if (slideTimeout) clearTimeout(slideTimeout)
 
-  const handleResize = () => {
-    windowWidth.value = window.innerWidth
+    slideTimeout = setTimeout(() => {
+      currentSlide.value = (currentSlide.value + 1) % mproData.value.slides.length
+      scheduleNextSlide()
+    }, delay)
+  }
+
+  // Função para vincular o elemento de vídeo atual quando o DOM atualizar
+  const setVideoRef = (el) => {
+    if (el) {
+      activeVideoRef.value = el
+    }
   }
 
   onMounted(() => {
-    window.addEventListener('resize', handleResize)
+    document.body.classList.add('mpro-page-active')
+    scheduleNextSlide()
+
+    // Configura o IntersectionObserver para dar play/pause baseado na rolagem da página
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5 // Dispara quando 50% da seção estiver visível
+    }
+
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!activeVideoRef.value) return
+
+        if (entry.isIntersecting) {
+          activeVideoRef.value.play().catch(() => {})
+        } else {
+          activeVideoRef.value.pause()
+        }
+      })
+    }, options)
+
+    // Observa a seção principal do MproHero (ou podes passar um ref do elemento raiz)
+    const sectionEl = document.querySelector('.mpro-hero-section')
+    if (sectionEl) {
+      observer.observe(sectionEl)
+    }
   })
 
   onUnmounted(() => {
-    window.removeEventListener('resize', handleResize)
+    document.body.classList.remove('mpro-page-active')
+    if (slideTimeout) clearTimeout(slideTimeout)
+    if (observer) observer.disconnect()
   })
-
-  const itemsPerView = computed(() => {
-    if (windowWidth.value < 768) return 1
-    if (windowWidth.value < 992) return 2
-    return 3
-  })
-
-  const maxIndex = computed(() => {
-    return Math.max(0, sectorsData.value.sectors.length - itemsPerView.value)
-  })
-
-  const nextSlide = () => {
-    if (currentIndex.value < maxIndex.value) {
-      currentIndex.value++
-    } else {
-      currentIndex.value = 0
-    }
-  }
-
-  const prevSlide = () => {
-    if (currentIndex.value > 0) {
-      currentIndex.value--
-    } else {
-      currentIndex.value = maxIndex.value
-    }
-  }
-
-  const selectSlide = (index) => {
-    if (index <= maxIndex.value) {
-      currentIndex.value = index
-    }
-  }
-
-  const toggleExpand = (id) => {
-    expandedCardId.value = expandedCardId.value === id ? null : id
-  }
-
-  // Funções de Gestos de Toque (Swipe)
-  const handleTouchStart = (e) => {
-    touchStartX.value = e.touches[0].clientX
-  }
-
-  const handleTouchMove = (e) => {
-    touchEndX.value = e.touches[0].clientX
-  }
-
-  const handleTouchEnd = () => {
-    const threshold = 50 // Distância mínima em pixéis para considerar um swipe
-    const diff = touchStartX.value - touchEndX.value
-
-    if (diff > threshold) {
-      // Arrastou para a esquerda (Avançar)
-      nextSlide()
-    } else if (diff < -threshold) {
-      // Arrastou para a direita (Recuar)
-      prevSlide()
-    }
-  }
 
   return {
-    sectorsData,
-    currentIndex,
-    expandedCardId,
-    itemsPerView,
-    maxIndex,
-    nextSlide,
-    prevSlide,
-    selectSlide,
-    toggleExpand,
-    handleTouchStart,
-    handleTouchMove,
-    handleTouchEnd
+    mproData,
+    currentSlide,
+    setVideoRef,
+    handleActionClick: () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
 }

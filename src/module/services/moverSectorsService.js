@@ -10,7 +10,7 @@ export const moverSectorsService = {
         {
           id: 1,
           title: "Cadastros",
-          icon: "bi bi-folder-fill",
+          icon: "bi bi-database-check",
           description: "O Módulo de Cadastros é a base estrutural de todo o sistema, projetado para garantir agilidade no preenchimento, confiabilidade das informações e centralização de dados essenciais para as rotinas fiscais, comerciais e financeiras.",
           image: "/moversolucoes7_imagem.jpg",
           imageAlt: "Operação industrial Mover",
@@ -19,7 +19,7 @@ export const moverSectorsService = {
         {
           id: 2,
           title: "Compras",
-          icon: "bi bi-cart-fill",
+          icon: "bi bi-cart-dash",
           description: "O Módulo de Compras foi projetado para transformar o setor de suprimentos em um centro estratégico de economia e eficiência. Ele automatiza desde a identificação da necessidade de reposição até o recebimento e o lançamento fiscal das mercadorias.",
           image: "/moversolucoes8.jpg",
           imageAlt: "Agronegócio Mover",
@@ -37,7 +37,7 @@ export const moverSectorsService = {
         {
           id: 4,
           title: "Movimentações",
-          icon: "bi bi-arrow-left-right",
+          icon: "bi bi-box-arrow-in-up",
           description: "O Módulo de Movimentações integra de ponta a ponta a cadeia de suprimentos e a saída de mercadorias, transformando o fluxo operacional em um processo unificado, inteligente e livre de redigitação.",
           image: "/moversolucoes5_imagem.jpg",
           imageAlt: "Logística Mover",
@@ -46,7 +46,7 @@ export const moverSectorsService = {
         {
           id: 5,
           title: "Pedidos de Vendas",
-          icon: "bi bi-bag-check-fill",
+          icon: "bi bi-upc-scan",
           description: "O Módulo de Vendas foi desenvolvido para centralizar, agilizar e dar total controle sobre a operação comercial de ponta a ponta. Ele conecta o balcão, o e-commerce, a equipe de campo e o setor de faturamento em um ecossistema inteligente, eliminando gargalos e erros manuais.",
           image: "/moversolucoes1_imagem.png",
           imageAlt: "Varejo Mover",

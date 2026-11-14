@@ -66,7 +66,7 @@
                       v-if="slide.type === 'video'"
                      :ref="(el) => { if (currentSlide === index) setVideoRef(el) }"
                         muted
-                        loop
+                        
                         controls
                       playsinline 
                       class="slide-media"

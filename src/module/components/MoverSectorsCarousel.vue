@@ -56,7 +56,8 @@
 
                   <!-- Botão de Ação (+) na Cor Azul do Projeto -->
                   <button 
-                    @click.stop="toggleExpand(sector.id)"
+                    @click.stop.prevent="toggleExpand(sector.id)"
+                    @touchend.stop.prevent="toggleExpand(sector.id)"
                     class="expand-btn position-absolute bottom-0 end-0 border-0 d-flex align-items-center justify-content-center shadow"
                     :aria-label="`Expandir detalhes de ${sector.title}`"
                   >
@@ -78,7 +79,8 @@
                   </div>
 
                   <button 
-                    @click.stop="toggleExpand(sector.id)"
+                    @click.stop.prevent="toggleExpand(sector.id)"
+                    @touchend.stop.prevent="toggleExpand(sector.id)"
                     class="close-btn position-absolute top-0 end-0 m-3 border-0 d-flex align-items-center justify-content-center shadow-sm rounded-circle z-2"
                     aria-label="Fechar imagem"
                   >
