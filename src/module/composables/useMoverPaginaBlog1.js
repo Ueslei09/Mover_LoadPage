@@ -15,7 +15,7 @@ export function useMoverPaginaBlog1() {
     mediaAlt: 'Imagem do Artigo',
     mediaType: 'image',
     breadcrumbs: [
-      { label: 'Início', url: '/' },
+      { label: 'Início', url: '/', icon: 'bi bi-house-check' },
       { label: 'Blog', url: '/#blog' },
       { label: 'Artigo', url: '#' }
     ],
@@ -30,7 +30,6 @@ export function useMoverPaginaBlog1() {
     try {
       const slugAtual = route.params.slug;
       
-      // Obtém os dados instantaneamente da memória/cache (0ms)
       const dataBlog = await moverBlogService.getData();
       
       if (dataBlog && dataBlog.posts && dataBlog.posts.length > 0) {
@@ -56,7 +55,7 @@ export function useMoverPaginaBlog1() {
             mediaAlt: postEncontrado.title,
             mediaType: postEncontrado.mediaType || 'image',
             breadcrumbs: [
-              { label: 'Início', url: '/' },
+              { label: 'Início', url: '/', icon: 'bi bi-house-check' }, // <-- CORRIGIDO AQUI (Adicionado o ícone)
               { label: 'Blog', url: '/#blog' },
               { label: postEncontrado.title, url: '#' }
             ],

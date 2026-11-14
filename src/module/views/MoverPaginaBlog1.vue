@@ -20,9 +20,12 @@
           
           <!-- BREADCRUMBS -->
           <nav aria-label="breadcrumb" class="mb-3">
-            <ol class="breadcrumb mb-0">
+            <ol class="breadcrumb mb-0 align-items-center">
               <li v-for="(crumb, index) in postData.breadcrumbs" :key="index" class="breadcrumb-item">
-                <a :href="crumb.url" class="text-decoration-none text-custom-blue fw-medium breadcrumb-link">{{ crumb.label }}</a>
+                <a :href="crumb.url" class="text-decoration-none text-custom-blue fw-medium breadcrumb-link d-inline-flex align-items-center gap-1">
+                  <i v-if="crumb.icon" :class="crumb.icon"></i>
+                  <span>{{ crumb.label }}</span>
+                </a>
               </li>
             </ol>
           </nav>
