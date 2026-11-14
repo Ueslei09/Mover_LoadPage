@@ -5,9 +5,13 @@ import { mproService } from '../services/MoverAboutService.js'
 export function useMpro() {
   const mproData = ref(mproService.getHeroData())
   const currentSlide = ref(0)
-  const activeVideoRef = ref(null) // Referência para o vídeo atual
+  const activeVideoRef = ref(null)
   let slideTimeout = null
   let observer = null
+
+  // Variáveis para controlar o Swipe no Mobile
+  const touchStartX = ref(0)
+  const touchEndX = ref(0)
 
   const scheduleNextSlide = () => {
     const delay = currentSlide.value === 0 ? 20000 : 10000
@@ -19,7 +23,30 @@ export function useMpro() {
     }, delay)
   }
 
-  // Função para vincular o elemento de vídeo atual quando o DOM atualizar
+  // Funções de Gestos de Toque (Swipe)
+  const handleTouchStart = (e) => {
+    touchStartX.value = e.touches[0].clientX
+  }
+
+  const handleTouchMove = (e) => {
+    touchEndX.value = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    const threshold = 50 // Distância mínima em pixéis para o swipe
+    const diff = touchStartX.value - touchEndX.value
+
+    if (diff > threshold) {
+      // Arrastou para a esquerda (Avançar slide)
+      currentSlide.value = (currentSlide.value + 1) % mproData.value.slides.length
+      scheduleNextSlide() // Reinicia o timer automático
+    } else if (diff < -threshold) {
+      // Arrastou para a direita (Recuar slide)
+      currentSlide.value = (currentSlide.value - 1 + mproData.value.slides.length) % mproData.value.slides.length
+      scheduleNextSlide() // Reinicia o timer automático
+    }
+  }
+
   const setVideoRef = (el) => {
     if (el) {
       activeVideoRef.value = el
@@ -30,11 +57,10 @@ export function useMpro() {
     document.body.classList.add('mpro-page-active')
     scheduleNextSlide()
 
-    // Configura o IntersectionObserver para dar play/pause baseado na rolagem da página
     const options = {
       root: null,
       rootMargin: '0px',
-      threshold: 0.5 // Dispara quando 50% da seção estiver visível
+      threshold: 0.5
     }
 
     observer = new IntersectionObserver((entries) => {
@@ -49,7 +75,6 @@ export function useMpro() {
       })
     }, options)
 
-    // Observa a seção principal do MproHero (ou podes passar um ref do elemento raiz)
     const sectionEl = document.querySelector('.mpro-hero-section')
     if (sectionEl) {
       observer.observe(sectionEl)
@@ -66,6 +91,9 @@ export function useMpro() {
     mproData,
     currentSlide,
     setVideoRef,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
     handleActionClick: () => {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }

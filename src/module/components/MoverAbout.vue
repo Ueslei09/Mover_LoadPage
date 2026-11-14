@@ -45,9 +45,14 @@
 
             </div>
 
-            <!-- COLUNA DO CARROSSEL DE VÍDEOS (Lado Direito - 50%) -->
+            <!-- COLUNA DO CARROSSEL DE VÍDEOS COM SUPORTE A SWIPE TÁTIL -->
             <div class="col-12 col-lg-6 hero-image-col text-center position-relative px-0">
-              <div class="carousel-container-wrapper position-relative w-100">
+              <div 
+                class="carousel-container-wrapper position-relative w-100"
+                @touchstart="handleTouchStart"
+                @touchmove="handleTouchMove"
+                @touchend="handleTouchEnd"
+              >
                 
                 <!-- Degradês laterais (Fade esquerdo e direito) -->
                 <div class="gradient-overlay-left"></div>
@@ -66,7 +71,6 @@
                       v-if="slide.type === 'video'"
                      :ref="(el) => { if (currentSlide === index) setVideoRef(el) }"
                         muted
-                        
                         controls
                       playsinline 
                       class="slide-media"
@@ -112,8 +116,16 @@
 import { useMpro } from '../composables/useMoverAbout.js'
 import { useParallax } from '@/shared/composables/useParallax'
 
+const { 
+  mproData, 
+  currentSlide, 
+  setVideoRef, 
+  handleTouchStart, 
+  handleTouchMove, 
+  handleTouchEnd, 
+  handleActionClick 
+} = useMpro()
 
-const { mproData, currentSlide, setVideoRef, handleActionClick } = useMpro()
 const { isVisible, elementRef } = useParallax(0.05)
 </script>
 
@@ -217,6 +229,7 @@ const { isVisible, elementRef } = useParallax(0.05)
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  touch-action: pan-y; /* Permite scroll vertical da página mas gere o swipe horizontal no carrossel */
 }
 
 .carousel-slides-track {
