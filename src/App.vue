@@ -3,6 +3,7 @@
   <div id="app" class="w-100 overflow-hidden">
     <!-- Tela de carregamento global (opcional manter aqui se quiser em todo o site) -->
     <InitialLoader :isLoading="isLoading" />
+    <MoverIaWidget />
 
     <!-- Apenas as rotas são renderizadas aqui. Cada View decide se quer Navbar/Footer -->
     <router-view v-slot="{ Component }" />
@@ -18,6 +19,7 @@
 import InitialLoader from '@/shared/components/InitialLoader.vue'
 import { useInitialLoader } from '@/shared/composables/useInitialLoader'
 import CookieBanner from '@/shared/components/CookieBanner.vue';
+import MoverIaWidget from "@/shared/components/MoverIaWidget.vue"
 
 
 const { isLoading } = useInitialLoader()
