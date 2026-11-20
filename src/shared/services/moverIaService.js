@@ -2,7 +2,7 @@ export const moverIaConfig = {
   // URL do seu Streamlit publicado no Render
   iframeUrl:
     import.meta.env.VITE_MOVER_IA_URL ||
-    "https://agentedeia-u8z2.onrender.com/?embed=true",
+    "/?embed=true",
   formUrl:
     import.meta.env.VITE_MOVER_FORM_URL || "https://seusite.com/formulario",
   whatsappUrl:
