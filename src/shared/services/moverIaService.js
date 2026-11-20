@@ -36,8 +36,8 @@ export const moverIaConfig = {
       import.meta.env.VITE_MOVER_IA_ICON_SRC ||
       "/IA_icone 2.mp4",
     alt: "Animação da Mover IA carregando",
-    title: "Eu sou MOVER IA",
-    subtitle: "seja bem vindos",
+    title: "Olá eu sou MOVER IA",
+    subtitle: "Seja bem vindo",
   },
 
   iaIcon: {
