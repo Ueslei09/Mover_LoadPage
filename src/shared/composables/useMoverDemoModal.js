@@ -1,10 +1,14 @@
 // src/modules/mover/composables/useMoverDemoModal.js
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { moverDemoService } from '../services/moverDemoService';
 
 const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/leads`;
 
 export function useMoverDemoModal() {
+  const route = useRoute();
+  const router = useRouter();
+
   const isModalOpen = ref(false);
   const demoData = ref(null);
   const formState = ref({
@@ -21,10 +25,6 @@ export function useMoverDemoModal() {
   const loading = ref(false);
   const errorMessage = ref('');
 
-  onMounted(() => {
-    demoData.value = moverDemoService.getFormData();
-  });
-
   const openModal = () => {
     isModalOpen.value = true;
     errorMessage.value = '';
@@ -32,7 +32,49 @@ export function useMoverDemoModal() {
 
   const closeModal = () => {
     isModalOpen.value = false;
+
+    // Se estiver na rota dedicada /demonstracao ou com query ?demo=true, limpa ao fechar
+    if (route?.path === moverDemoService.routePath) {
+      router.replace('/').catch(() => {});
+    } else if (route?.query?.demo || route?.query?.openDemo) {
+      const nextQuery = { ...route.query };
+      delete nextQuery.demo;
+      delete nextQuery.openDemo;
+      router.replace({ path: route.path, query: nextQuery }).catch(() => {});
+    }
   };
+
+  const handleWindowMessage = (event) => {
+    if (moverDemoService.isOpenModalMessage(event?.data)) {
+      openModal();
+    }
+  };
+
+  watch(
+    () => [route?.path, route?.query?.demo, route?.query?.openDemo, route?.meta?.openDemoModal],
+    () => {
+      if (moverDemoService.shouldOpenFromRoute(route)) {
+        openModal();
+      }
+    },
+    { immediate: true }
+  );
+
+  onMounted(() => {
+    demoData.value = moverDemoService.getFormData();
+    if (moverDemoService.shouldOpenFromRoute(route)) {
+      openModal();
+    }
+    if (typeof window !== 'undefined') {
+      window.addEventListener('message', handleWindowMessage);
+    }
+  });
+
+  onUnmounted(() => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('message', handleWindowMessage);
+    }
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +82,6 @@ export function useMoverDemoModal() {
     errorMessage.value = '';
 
     try {
-      // Envia os dados para a nossa API Node.js na porta 5000
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
@@ -50,7 +91,6 @@ export function useMoverDemoModal() {
           name: formState.value.nome,
           email: formState.value.email,
           phone: formState.value.telefone,
-          // Se quiser guardar cargo, empresa e mensagem juntos no campo mensagem ou na base de dados:
           message: `Cargo: ${formState.value.cargo} | Empresa: ${formState.value.empresa} | Mensagem: ${formState.value.mensagem}`
         })
       });
@@ -62,8 +102,7 @@ export function useMoverDemoModal() {
       }
 
       alert("Demonstração solicitada com sucesso! Entraremos em contacto em breve.");
-      
-      // Limpar o formulário e fechar o modal
+
       formState.value = {
         nome: '',
         email: '',
@@ -74,11 +113,11 @@ export function useMoverDemoModal() {
         concordo1: false,
         concordo2: false
       };
-      
-      closeModal();
 
+      closeModal();
     } catch (err) {
       console.error("Erro ao enviar lead:", err);
+      errorMessage.value = "Ocorreu um erro ao conectar com o servidor. Tente novamente.";
       alert("Ocorreu um erro ao conectar com o servidor. Tente novamente.");
     } finally {
       loading.value = false;
@@ -89,10 +128,10 @@ export function useMoverDemoModal() {
     isModalOpen,
     demoData,
     formState,
-    loading, // Útil caso queira mostrar um indicador de "A enviar..." no botão do modal
+    loading,
+    errorMessage,
     openModal,
     closeModal,
     handleSubmit
   };
 }
-

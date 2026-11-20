@@ -11,6 +11,7 @@ import LeadsDashboard from '../login/components/LeadsDashboard.vue'
 import BlogDashboard from '../login/components/BlogDashboard.vue'
 import AdminUsersView from '../login/components/AdminUsersView.vue'
 import AdminInstragamView from '../login/components/InstagramPostView.vue'
+import MoverDemonstracao from  '@/shared/components/MoverDemoModal.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,6 +36,13 @@ const router = createRouter({
       name: 'RecuperarSenha',
       component: PasswordRecoveryView
     },
+    {
+    path: '/demonstracao',
+    name: 'MoverDemonstracao',
+    // Caso tenha uma view principal, pode apontar para ela ou para um wrapper leve que abra o modal
+    component: MoverDemonstracao,
+    meta: { openDemoModal: true }
+  },
     {
       path: '/admin',
       component: AdminLayout,

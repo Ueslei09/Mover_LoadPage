@@ -2,56 +2,83 @@
 <template>
   <Teleport to="body">
     <Transition name="modal-fade">
-      <div v-if="isOpen" class="demo-modal-backdrop d-flex align-items-center justify-content-center" @click.self="close">
+      <div
+        v-if="activeIsOpen"
+        class="demo-modal-backdrop d-flex align-items-center justify-content-center"
+        @click.self="activeClose"
+      >
         <div class="demo-modal-container position-relative p-4 p-md-5 w-100 mx-3">
           
           <!-- Botão de Fechar -->
-          <button class="btn-close-custom position-absolute top-0 end-0 m-4" @click="close" aria-label="Fechar">
+          <button
+            type="button"
+            class="btn-close-custom position-absolute top-0 end-0 m-4"
+            @click="activeClose"
+            aria-label="Fechar"
+          >
             <i class="bi bi-x-lg"></i>
           </button>
 
           <!-- TOPO: Logo e Linha Divisória Verde de 2px -->
           <div class="text-center mb-4">
-            <img :src="data?.logoSrc" :alt="data?.logoAlt" class="modal-logo mb-3" />
+            <img :src="activeData?.logoSrc" :alt="activeData?.logoAlt" class="modal-logo mb-3" />
             <hr class="modal-divider mx-auto" />
           </div>
 
           <!-- FORMULÁRIO -->
-          <form @submit="onSubmit" class="row g-3">
-            <template v-for="field in data?.fields" :key="field.id">
+          <form @submit="activeSubmit" class="row g-3">
+            <template v-for="field in activeData?.fields" :key="field.id">
               <div :class="field.col">
                 <label :for="field.id" class="form-label fw-semibold text-custom-dark">{{ field.label }}</label>
                 
-                <select v-if="field.type === 'select'" :id="field.id" v-model="form[field.id]" class="form-select custom-input">
+                <select v-if="field.type === 'select'" :id="field.id" v-model="activeForm[field.id]" class="form-select custom-input">
                   <option v-for="opt in field.options" :key="opt" :value="opt">{{ opt }}</option>
                 </select>
 
-                <textarea v-else-if="field.type === 'textarea'" :id="field.id" v-model="form[field.id]" class="form-control custom-input" rows="3" :placeholder="field.placeholder"></textarea>
+                <textarea
+                  v-else-if="field.type === 'textarea'"
+                  :id="field.id"
+                  v-model="activeForm[field.id]"
+                  class="form-control custom-input"
+                  rows="3"
+                  :placeholder="field.placeholder"
+                ></textarea>
 
-                <input v-else :type="field.type" :id="field.id" v-model="form[field.id]" class="form-control custom-input" :placeholder="field.placeholder" />
+                <input
+                  v-else
+                  :type="field.type"
+                  :id="field.id"
+                  v-model="activeForm[field.id]"
+                  class="form-control custom-input"
+                  :placeholder="field.placeholder"
+                />
               </div>
             </template>
 
             <!-- Termos e Consentimentos -->
             <div class="col-12 mt-3">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="concordo1" v-model="form.concordo1" required />
+                <input class="form-check-input" type="checkbox" id="concordo1" v-model="activeForm.concordo1" required />
                 <label class="form-check-label text-muted small" for="concordo1">
-                  {{ data?.consentText1 }}
+                  {{ activeData?.consentText1 }}
                 </label>
               </div>
               <div class="form-check mt-2">
-                <input class="form-check-input" type="checkbox" id="concordo2" v-model="form.concordo2" required />
+                <input class="form-check-input" type="checkbox" id="concordo2" v-model="activeForm.concordo2" required />
                 <label class="form-check-label text-muted small" for="concordo2">
-                  {{ data?.consentText2 }}
+                  {{ activeData?.consentText2 }}
                 </label>
               </div>
             </div>
 
             <!-- Botão de Envio Customizado -->
             <div class="col-12 mt-4 text-center">
-              <button type="submit" class="btn btn-submit-custom w-100 py-3 fw-semibold text-white rounded-pill shadow-sm">
-                {{ data?.submitButtonText }}
+              <button
+                type="submit"
+                :disabled="activeLoading"
+                class="btn btn-submit-custom w-100 py-3 fw-semibold text-white rounded-pill shadow-sm"
+              >
+                {{ activeLoading ? 'Enviando...' : activeData?.submitButtonText }}
               </button>
             </div>
           </form>
@@ -63,13 +90,38 @@
 </template>
 
 <script setup>
-defineProps({
-  isOpen: Boolean,
-  data: Object,
-  form: Object,
-  close: Function,
-  onSubmit: Function
+import { computed } from 'vue';
+import { useMoverDemoModal } from '@/shared/composables/useMoverDemoModal';
+
+const props = defineProps({
+  isOpen: { type: Boolean, default: undefined },
+  data: { type: Object, default: undefined },
+  form: { type: Object, default: undefined },
+  loading: { type: Boolean, default: undefined },
+  close: { type: Function, default: undefined },
+  onSubmit: { type: Function, default: undefined }
 });
+
+const modalState = useMoverDemoModal();
+
+const activeIsOpen = computed(() =>
+  props.isOpen !== undefined ? props.isOpen : modalState.isModalOpen.value
+);
+const activeData = computed(() =>
+  props.data !== undefined ? props.data : modalState.demoData.value
+);
+const activeForm = computed(() =>
+  props.form !== undefined ? props.form : modalState.formState.value
+);
+const activeLoading = computed(() =>
+  props.loading !== undefined ? props.loading : modalState.loading.value
+);
+const activeClose = computed(() =>
+  props.close !== undefined ? props.close : modalState.closeModal
+);
+const activeSubmit = computed(() =>
+  props.onSubmit !== undefined ? props.onSubmit : modalState.handleSubmit
+);
 </script>
 
 <style scoped>

@@ -1,5 +1,7 @@
 // src/modules/mover/services/moverDemoService.js
 export const moverDemoService = {
+  routePath: '/demonstracao',
+
   getFormData() {
     return {
       logoSrc: "/moovelogo1_imagem.png",
@@ -17,5 +19,24 @@ export const moverDemoService = {
       consentText2: "Li e concordo com a Política de Privacidade, autorizando o contato comercial.",
       submitButtonText: "Solicitar Demonstração"
     };
+  },
+
+  shouldOpenFromRoute(route) {
+    if (!route) return false;
+    return (
+      Boolean(route.meta?.openDemoModal) ||
+      route.path === this.routePath ||
+      route.query?.demo === 'true' ||
+      route.query?.openDemo === 'true'
+    );
+  },
+
+  isOpenModalMessage(eventData) {
+    if (!eventData || typeof eventData !== 'object') return false;
+    return (
+      eventData.type === 'OPEN_DEMO_MODAL' ||
+      eventData.action === 'open-demo-modal' ||
+      eventData.route === this.routePath
+    );
   }
 };
