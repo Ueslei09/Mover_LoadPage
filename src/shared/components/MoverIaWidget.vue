@@ -426,7 +426,7 @@ const wrapperStyle = computed(() => {
 @media (max-width: 576px) {
   .mover-float-wrapper {
     position: fixed;
-    top: max(12px, env(safe-area-inset-top));
+    top: max(68px, calc(env(safe-area-inset-top) + 54px));
     right: max(12px, env(safe-area-inset-right));
     bottom: auto;
     z-index: 9999;
