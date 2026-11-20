@@ -23,12 +23,14 @@ export const moverIaConfig = {
     alt: "Mover IA - Frame inicial",
   },
 
-  // Tela de espera inicial (10s) enquanto o agente no Render inicia
+  // Initial Load condicional: fica visível até a comunicação com o Render ser estabelecida
   initialLoad: {
     enabled:
       import.meta.env.VITE_MOVER_IA_INITIAL_LOAD_ENABLED !== "false",
-    durationMs: Number(import.meta.env.VITE_MOVER_IA_INITIAL_LOAD_MS) || 10000,
-    type: import.meta.env.VITE_MOVER_IA_LOADER_TYPE || "gif", // "gif" | "video" | "image" | "emoji"
+    readyMessageType: "MOVER_IA_READY", // Mensagem enviada pelo agente quando pronto
+    pollIntervalMs: 2500, // Intervalo para checar comunicação com o Render
+    maxWaitMs: 60000, // Limite de segurança (60s) caso o Render não responda
+    type: import.meta.env.VITE_MOVER_IA_LOADER_TYPE || "gif",
     src:
       import.meta.env.VITE_MOVER_IA_LOADER_SRC ||
       import.meta.env.VITE_MOVER_IA_ICON_SRC ||
@@ -38,15 +40,13 @@ export const moverIaConfig = {
     subtitle: "seja bem vindos",
   },
 
-  // Configuração centralizada do ícone/mídia da IA no widget Vue
-  // type: "emoji" | "image" | "gif" | "video"
   iaIcon: {
     type:
-      import.meta.env.VITE_MOVER_IA_ICON_TYPE || "gif", // "emoji" | "image" | "gif" | "video"
+      import.meta.env.VITE_MOVER_IA_ICON_TYPE || "gif",
     src:
       import.meta.env.VITE_MOVER_IA_ICON_SRC || "/IA_icone 2.mp4",
     headerSrc:
-      import.meta.env.VITE_MOVER_IA_HEADER_ICON_SRC || "", // Opcional: usa `src` se vazio
+      import.meta.env.VITE_MOVER_IA_HEADER_ICON_SRC || "",
     alt: "Mover IA",
     fallbackEmoji: "🤖",
     closeEmoji: "✕",

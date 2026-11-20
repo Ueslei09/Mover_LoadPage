@@ -74,50 +74,44 @@
               role="status"
               aria-live="polite"
             >
-              <!-- Etapa 1 (1s): Frame de imagem estática antes do GIF/vídeo -->
-              <template v-if="showPanelFrame && activeFrameMedia.kind === 'image'">
-                <div class="mover-loader-media-box rounded-4 overflow-hidden shadow-sm mb-3 d-flex align-items-center justify-content-center">
-                  <img
-                    :src="activeFrameMedia.src"
-                    :alt="config.initialFrame?.alt || config.iaIcon.alt"
-                    class="w-100 h-100 mover-media-fit"
-                    @error="markFrameMediaFailed"
-                  />
-                </div>
-              </template>
+              <div class="mover-loader-media-box rounded-4 overflow-hidden shadow-sm mb-3 d-flex align-items-center justify-content-center">
+                <!-- Etapa 1 (1s): Frame de imagem estática antes do GIF/vídeo -->
+                <img
+                  v-if="showPanelFrame && activeFrameMedia.kind === 'image'"
+                  :src="activeFrameMedia.src"
+                  :alt="config.initialFrame?.alt || config.iaIcon.alt"
+                  class="w-100 h-100 mover-media-fit"
+                  @error="markFrameMediaFailed"
+                />
+                <!-- Etapa 2: GIF / mídia animada -->
+                <video
+                  v-else-if="activeLoaderMedia.kind === 'video'"
+                  :src="activeLoaderMedia.src"
+                  autoplay
+                  loop
+                  muted
+                  playsinline
+                  class="w-100 h-100 mover-media-fit"
+                  @error="markLoaderMediaFailed"
+                />
+                <img
+                  v-else-if="activeLoaderMedia.kind === 'image'"
+                  :src="activeLoaderMedia.src"
+                  :alt="config.initialLoad?.alt || config.iaIcon.alt"
+                  class="w-100 h-100 mover-media-fit"
+                  @error="markLoaderMediaFailed"
+                />
+                <span v-else class="fs-1">{{ config.iaIcon.fallbackEmoji }}</span>
+              </div>
 
-              <!-- Etapa 2: GIF / mídia animada + textos animados abaixo -->
-              <template v-else>
-                <div class="mover-loader-media-box rounded-4 overflow-hidden shadow-sm mb-3 d-flex align-items-center justify-content-center">
-                  <video
-                    v-if="activeLoaderMedia.kind === 'video'"
-                    :src="activeLoaderMedia.src"
-                    autoplay
-                    loop
-                    muted
-                    playsinline
-                    class="w-100 h-100 mover-media-fit"
-                    @error="markLoaderMediaFailed"
-                  />
-                  <img
-                    v-else-if="activeLoaderMedia.kind === 'image'"
-                    :src="activeLoaderMedia.src"
-                    :alt="config.initialLoad?.alt || config.iaIcon.alt"
-                    class="w-100 h-100 mover-media-fit"
-                    @error="markLoaderMediaFailed"
-                  />
-                  <span v-else class="fs-1">{{ config.iaIcon.fallbackEmoji }}</span>
-                </div>
-
-                <div class="mover-loader-copy d-flex flex-column align-items-center gap-1">
-                  <p class="mover-loader-title fw-bold mb-0">
-                    {{ config.initialLoad?.title || "Eu sou MOVER IA" }}
-                  </p>
-                  <p class="mover-loader-subtitle mb-0">
-                    {{ config.initialLoad?.subtitle || "seja bem vindos" }}
-                  </p>
-                </div>
-              </template>
+              <div class="mover-loader-copy d-flex flex-column align-items-center gap-1">
+                <p class="mover-loader-title fw-bold mb-0">
+                  {{ config.initialLoad?.title || "Eu sou MOVER IA" }}
+                </p>
+                <p class="mover-loader-subtitle mb-0">
+                  {{ config.initialLoad?.subtitle || "seja bem vindos" }}
+                </p>
+              </div>
             </div>
           </transition>
 
@@ -125,6 +119,7 @@
             :src="config.iframeUrl"
             title="Mover IA"
             class="w-100 h-100 border-0 d-block"
+            @load="handleIframeLoad"
           />
         </div>
       </div>
@@ -192,6 +187,7 @@ const {
   markHeaderMediaFailed,
   markLoaderMediaFailed,
   markFrameMediaFailed,
+  handleIframeLoad,
   toggleWidget,
   closeWidget,
 } = useMoverWidget(config);
@@ -302,22 +298,28 @@ const wrapperStyle = computed(() => {
   z-index: 10000;
   width: min(400px, calc(100vw - 48px));
   height: min(600px, calc(100dvh - 116px));
-  background: #ffffff;
+  background: #f8fbff;
   display: flex;
   visibility: visible;
   opacity: 1;
 }
 
 .mover-frame-box {
-  min-height: 0;
+  min-height: 240px;
   flex: 1 1 auto;
+  position: relative;
   overflow: hidden;
+  background-color: #f8fbff;
   -webkit-overflow-scrolling: touch;
 }
 
 /* Camada de Initial Load no painel */
 .mover-initial-loader {
-  z-index: 5;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
   background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
 }
 
@@ -409,8 +411,10 @@ const wrapperStyle = computed(() => {
 
 @media (max-width: 576px) {
   .mover-float-wrapper {
-    bottom: max(12px, env(safe-area-inset-bottom));
+    position: fixed;
+    top: max(12px, env(safe-area-inset-top));
     right: max(12px, env(safe-area-inset-right));
+    bottom: auto;
     z-index: 9999;
   }
 
@@ -429,14 +433,24 @@ const wrapperStyle = computed(() => {
   }
 
   .mover-bubble {
-    bottom: 66px;
+    top: 64px;
+    bottom: auto;
     right: 0;
     max-width: min(240px, calc(100vw - 24px));
+    border-radius: 18px 4px 18px 18px;
     white-space: normal;
   }
 
   .mover-bubble::after {
+    top: -7px;
+    bottom: auto;
     right: 20px;
+    border-right: none;
+    border-bottom: none;
+    border-left: 1px solid rgba(13, 110, 253, 0.16);
+    border-top: 1px solid rgba(13, 110, 253, 0.16);
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 3px;
   }
 
   .mover-panel {

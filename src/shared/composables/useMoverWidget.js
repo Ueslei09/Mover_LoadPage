@@ -32,12 +32,20 @@ export function useMoverWidget(config = moverIaConfig) {
   const showIconFrame = ref(true);
   const showPanelFrame = ref(false);
   const isInitialLoading = ref(false);
+  const isRenderConnected = ref(false);
 
   let iconFrameTimeoutId = null;
   let panelFrameTimeoutId = null;
-  let initialLoadTimeoutId = null;
+  let maxWaitTimeoutId = null;
 
-  const clearTimers = () => {
+  const clearConnectionWatchers = () => {
+    if (maxWaitTimeoutId !== null) {
+      clearTimeout(maxWaitTimeoutId);
+      maxWaitTimeoutId = null;
+    }
+  };
+
+  const clearAllTimers = () => {
     if (iconFrameTimeoutId !== null) {
       clearTimeout(iconFrameTimeoutId);
       iconFrameTimeoutId = null;
@@ -46,10 +54,14 @@ export function useMoverWidget(config = moverIaConfig) {
       clearTimeout(panelFrameTimeoutId);
       panelFrameTimeoutId = null;
     }
-    if (initialLoadTimeoutId !== null) {
-      clearTimeout(initialLoadTimeoutId);
-      initialLoadTimeoutId = null;
-    }
+    clearConnectionWatchers();
+  };
+
+  const confirmRenderConnection = () => {
+    isRenderConnected.value = true;
+    isInitialLoading.value = false;
+    showPanelFrame.value = false;
+    clearConnectionWatchers();
   };
 
   const startIconFrameSequence = () => {
@@ -79,26 +91,24 @@ export function useMoverWidget(config = moverIaConfig) {
       clearTimeout(panelFrameTimeoutId);
       panelFrameTimeoutId = null;
     }
-    if (initialLoadTimeoutId !== null) {
-      clearTimeout(initialLoadTimeoutId);
-      initialLoadTimeoutId = null;
-    }
+    clearConnectionWatchers();
 
     const loaderCfg = config?.initialLoad;
     const isLoaderEnabled = loaderCfg?.enabled !== false;
-    const durationMs = Number(loaderCfg?.durationMs ?? 10000);
+
+    if (!isLoaderEnabled) {
+      isRenderConnected.value = true;
+      isInitialLoading.value = false;
+      showPanelFrame.value = false;
+      return;
+    }
+
+    isRenderConnected.value = false;
+    isInitialLoading.value = true;
 
     const frameCfg = config?.initialFrame;
     const isFrameEnabled = frameCfg?.enabled !== false;
     const frameDelayMs = Number(frameCfg?.delayMs ?? 1000);
-
-    if (!isLoaderEnabled || durationMs <= 0) {
-      showPanelFrame.value = false;
-      isInitialLoading.value = false;
-      return;
-    }
-
-    isInitialLoading.value = true;
 
     if (isFrameEnabled && frameCfg?.src && frameDelayMs > 0) {
       showPanelFrame.value = true;
@@ -110,11 +120,27 @@ export function useMoverWidget(config = moverIaConfig) {
       showPanelFrame.value = false;
     }
 
-    initialLoadTimeoutId = setTimeout(() => {
-      isInitialLoading.value = false;
-      showPanelFrame.value = false;
-      initialLoadTimeoutId = null;
-    }, durationMs);
+    const maxWaitMs = Number(loaderCfg?.maxWaitMs ?? 60000);
+    if (maxWaitMs > 0) {
+      maxWaitTimeoutId = setTimeout(() => {
+        confirmRenderConnection();
+      }, maxWaitMs);
+    }
+  };
+
+  const handleWindowMessage = (event) => {
+    const readyType = config?.initialLoad?.readyMessageType || "MOVER_IA_READY";
+    const payload = event?.data;
+    if (
+      payload === readyType ||
+      (typeof payload === "object" && payload !== null && payload.type === readyType)
+    ) {
+      confirmRenderConnection();
+    }
+  };
+
+  const handleIframeLoad = () => {
+    // Mantém o initialLoad até receber MOVER_IA_READY do agente ou atingir maxWaitMs
   };
 
   const updateViewport = () => {
@@ -181,15 +207,13 @@ export function useMoverWidget(config = moverIaConfig) {
     isOpen.value = false;
     showBubble.value = true;
     isInitialLoading.value = false;
+    isRenderConnected.value = false;
     showPanelFrame.value = false;
     if (panelFrameTimeoutId !== null) {
       clearTimeout(panelFrameTimeoutId);
       panelFrameTimeoutId = null;
     }
-    if (initialLoadTimeoutId !== null) {
-      clearTimeout(initialLoadTimeoutId);
-      initialLoadTimeoutId = null;
-    }
+    clearConnectionWatchers();
   };
 
   const toggleWidget = () => {
@@ -225,14 +249,16 @@ export function useMoverWidget(config = moverIaConfig) {
     if (typeof window !== "undefined") {
       window.addEventListener("scroll", updateViewport, { passive: true });
       window.addEventListener("resize", updateViewport, { passive: true });
+      window.addEventListener("message", handleWindowMessage);
     }
   });
 
   onUnmounted(() => {
-    clearTimers();
+    clearAllTimers();
     if (typeof window !== "undefined") {
       window.removeEventListener("scroll", updateViewport);
       window.removeEventListener("resize", updateViewport);
+      window.removeEventListener("message", handleWindowMessage);
     }
   });
 
@@ -243,6 +269,7 @@ export function useMoverWidget(config = moverIaConfig) {
     showIconFrame,
     showPanelFrame,
     isInitialLoading,
+    isRenderConnected,
     parallaxOffset,
     activeFrameMedia,
     activeLauncherMedia,
@@ -252,6 +279,8 @@ export function useMoverWidget(config = moverIaConfig) {
     markHeaderMediaFailed,
     markLoaderMediaFailed,
     markFrameMediaFailed,
+    handleIframeLoad,
+    confirmRenderConnection,
     toggleWidget,
     closeWidget,
   };
