@@ -5,20 +5,22 @@
       :class="{ 'mover-float-wrapper--open': isOpen }"
       :style="wrapperStyle"
     >
-      <!-- Balãozinho de aviso estilizado -->
-      <div
-        v-if="showBubble && !isOpen"
-        class="mover-bubble shadow-lg px-3 py-2"
-        role="button"
-        tabindex="0"
-        @click="toggleWidget"
-        @keydown.enter="toggleWidget"
-      >
-        <div class="d-flex align-items-center gap-2">
-          <span class="mover-bubble-dot" aria-hidden="true"></span>
-          <span class="fw-semibold text-dark small lh-sm">{{ config.bubbleText }}</span>
+      <!-- Balãozinho de aviso estilizado com entrada/saída suave -->
+      <Transition name="mover-bubble-pop">
+        <div
+          v-if="showBubble && !isOpen"
+          class="mover-bubble shadow-lg px-3 py-2"
+          role="button"
+          tabindex="0"
+          @click="toggleWidget"
+          @keydown.enter="toggleWidget"
+        >
+          <div class="d-flex align-items-center gap-2">
+            <span class="mover-bubble-dot" aria-hidden="true"></span>
+            <span class="fw-semibold text-dark small lh-sm">{{ config.bubbleText }}</span>
+          </div>
         </div>
-      </div>
+      </Transition>
 
       <!-- Janela / Frame do Mover IA -->
       <div
@@ -50,7 +52,7 @@
             </span>
             <div class="text-truncate">
               <div class="fw-bold lh-1 text-truncate">Mover IA</div>
-              <small class="text-white-50 d-block text-truncate">Assistente Virtual</small>
+              <small class="text-white-50 d-block text-truncate">Inteligência Artificial da Mover</small>
             </div>
           </div>
 
@@ -227,7 +229,7 @@ const wrapperStyle = computed(() => {
   border-radius: 18px 18px 4px 18px;
   cursor: pointer;
   animation: floatBubble 2.6s ease-in-out infinite;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease;
 }
 
 .mover-bubble:hover {
@@ -255,6 +257,18 @@ const wrapperStyle = computed(() => {
   border-radius: 50%;
   background-color: #0d6efd;
   box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.18);
+}
+
+/* Transição suave de entrada e saída do balãozinho */
+.mover-bubble-pop-enter-active,
+.mover-bubble-pop-leave-active {
+  transition: opacity 0.32s ease, transform 0.32s ease;
+}
+
+.mover-bubble-pop-enter-from,
+.mover-bubble-pop-leave-to {
+  opacity: 0;
+  transform: translateY(8px) scale(0.95);
 }
 
 .mover-mini-media {

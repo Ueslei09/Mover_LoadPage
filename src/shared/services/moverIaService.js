@@ -9,7 +9,7 @@ export const moverIaConfig = {
     import.meta.env.VITE_MOVER_WHATSAPP_URL ||
     "https://wa.me/5562994077581",
 
-  bubbleText: "Olá eu sou Mover IA estou a disposição!",
+  bubbleText: "Olá eu sou a Mover IA estou a disposição!",
   welcomeTitle: "Oi, eu sou MOVER IA, fico muito feliz em ter você por aqui!",
   welcomeSubtitle:
     "E vi que você tem interesse na nossa demonstração das nossas soluções.",
@@ -36,8 +36,8 @@ export const moverIaConfig = {
       import.meta.env.VITE_MOVER_IA_ICON_SRC ||
       "/IA_icone 2.mp4",
     alt: "Animação da Mover IA carregando",
-    title: "Olá eu sou MOVER IA",
-    subtitle: "Seja bem vindo",
+    title: "Olá eu sou a MOVER IA",
+    subtitle: "A inteligência que Move o seu negócio.",
   },
 
   iaIcon: {

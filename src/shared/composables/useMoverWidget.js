@@ -1,6 +1,9 @@
 import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 import { moverIaConfig } from "../services/moverIaService";
 
+const BUBBLE_VISIBLE_MS = 10000;
+const BUBBLE_HIDDEN_MS = 8000;
+
 function resolveMediaSource(srcValue, typeValue, hasFailed) {
   const cleanSrc = (srcValue || "").trim();
   if (!cleanSrc || hasFailed || typeValue === "emoji") {
@@ -37,6 +40,14 @@ export function useMoverWidget(config = moverIaConfig) {
   let iconFrameTimeoutId = null;
   let panelFrameTimeoutId = null;
   let maxWaitTimeoutId = null;
+  let bubbleCycleTimeoutId = null;
+
+  const clearBubbleCycle = () => {
+    if (bubbleCycleTimeoutId !== null) {
+      clearTimeout(bubbleCycleTimeoutId);
+      bubbleCycleTimeoutId = null;
+    }
+  };
 
   const clearConnectionWatchers = () => {
     if (maxWaitTimeoutId !== null) {
@@ -54,7 +65,45 @@ export function useMoverWidget(config = moverIaConfig) {
       clearTimeout(panelFrameTimeoutId);
       panelFrameTimeoutId = null;
     }
+    clearBubbleCycle();
     clearConnectionWatchers();
+  };
+
+  const scheduleBubbleHide = () => {
+    clearBubbleCycle();
+    if (isOpen.value) {
+      showBubble.value = false;
+      return;
+    }
+
+    showBubble.value = true;
+    bubbleCycleTimeoutId = setTimeout(() => {
+      showBubble.value = false;
+      scheduleBubbleShow();
+    }, BUBBLE_VISIBLE_MS);
+  };
+
+  const scheduleBubbleShow = () => {
+    clearBubbleCycle();
+    if (isOpen.value) {
+      showBubble.value = false;
+      return;
+    }
+
+    bubbleCycleTimeoutId = setTimeout(() => {
+      if (!isOpen.value) {
+        scheduleBubbleHide();
+      }
+    }, BUBBLE_HIDDEN_MS);
+  };
+
+  const startBubbleCycle = () => {
+    if (isOpen.value) {
+      showBubble.value = false;
+      clearBubbleCycle();
+      return;
+    }
+    scheduleBubbleHide();
   };
 
   const confirmRenderConnection = () => {
@@ -205,7 +254,6 @@ export function useMoverWidget(config = moverIaConfig) {
 
   const closeWidget = () => {
     isOpen.value = false;
-    showBubble.value = true;
     isInitialLoading.value = false;
     isRenderConnected.value = false;
     showPanelFrame.value = false;
@@ -214,12 +262,14 @@ export function useMoverWidget(config = moverIaConfig) {
       panelFrameTimeoutId = null;
     }
     clearConnectionWatchers();
+    startBubbleCycle();
   };
 
   const toggleWidget = () => {
     if (!isOpen.value) {
       isOpen.value = true;
       showBubble.value = false;
+      clearBubbleCycle();
       startPanelLoadSequence();
     } else {
       closeWidget();
@@ -246,6 +296,7 @@ export function useMoverWidget(config = moverIaConfig) {
   onMounted(() => {
     updateViewport();
     startIconFrameSequence();
+    startBubbleCycle();
     if (typeof window !== "undefined") {
       window.addEventListener("scroll", updateViewport, { passive: true });
       window.addEventListener("resize", updateViewport, { passive: true });
